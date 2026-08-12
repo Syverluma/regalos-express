@@ -32,38 +32,17 @@
       pointer-events: none;
     }
     .stat-card-pedido {
-      background: #ffffff;
       border-radius: 16px;
       padding: 1.25rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.06);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
     .stat-card-pedido:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(13, 110, 253, 0.12);
-    }
-    body.modo-oscuro .stat-card-pedido {
-      background: #1e2430;
-      border-color: rgba(255,255,255,0.08);
-      color: #f8f9fa;
     }
     .pedido-card {
-      background: #ffffff;
       border-radius: 18px;
-      border: 1px solid rgba(0,0,0,0.08);
-      box-shadow: 0 6px 20px rgba(0,0,0,0.04);
       transition: all 0.25s ease;
       overflow: hidden;
-    }
-    .pedido-card:hover {
-      box-shadow: 0 10px 30px rgba(0,0,0,0.09);
-      border-color: #0d6efd;
-    }
-    body.modo-oscuro .pedido-card {
-      background: #1a202c;
-      border-color: rgba(255,255,255,0.08);
-      color: #e2e8f0;
     }
     .pedido-item-thumb {
       width: 54px;
@@ -116,7 +95,7 @@
           <h1 class="fw-bold mb-1 d-flex align-items-center gap-2" style="font-family: 'Orbitron', sans-serif;">
             <i class="bi bi-box-seam-fill text-primary"></i> MIS PEDIDOS
           </h1>
-          <p class="text-light opacity-75 mb-0">Consulta, filtra, gestiona y vuelve a ordenar cualquiera de tus compras en eDark.</p>
+          <p class="text-light opacity-75 mb-0">Consulta, filtra y gestiona cualquiera de tus compras registradas.</p>
         </div>
         <div class="d-flex gap-2">
           <a href="index.html" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2">
@@ -132,7 +111,7 @@
     <!-- Resumen / Métricas -->
     <div class="row g-4 mb-5" id="statsContainer">
       <div class="col-12 col-md-4">
-        <div class="stat-card-pedido d-flex align-items-center gap-3">
+        <div class="stat-card-pedido card p-3 d-flex align-items-center gap-3 shadow-sm border">
           <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
             <i class="bi bi-bag-check-fill fs-3"></i>
           </div>
@@ -143,7 +122,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="stat-card-pedido d-flex align-items-center gap-3">
+        <div class="stat-card-pedido card p-3 d-flex align-items-center gap-3 shadow-sm border">
           <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
             <i class="bi bi-cash-stack fs-3"></i>
           </div>
@@ -154,7 +133,7 @@
         </div>
       </div>
       <div class="col-12 col-md-4">
-        <div class="stat-card-pedido d-flex align-items-center gap-3">
+        <div class="stat-card-pedido card p-3 d-flex align-items-center gap-3 shadow-sm border">
           <div class="bg-info bg-opacity-10 text-info rounded-circle p-3 d-flex align-items-center justify-content-center" style="width: 58px; height: 58px;">
             <i class="bi bi-calendar-check fs-3"></i>
           </div>
@@ -167,16 +146,13 @@
     </div>
 
     <!-- Barra de Filtros y Búsqueda -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 bg-light p-3 rounded-4 border">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4 card p-3 rounded-4 border">
       <div class="d-flex flex-wrap gap-2" id="filterTabsContainer">
         <button class="btn btn-primary filter-tab-btn active" data-filter="todos">
-          <i class="bi bi-grid-fill me-1"></i> Todos
+          <i class="bi bi-grid-fill me-1"></i> Todos los pedidos
         </button>
-        <button class="btn btn-outline-secondary filter-tab-btn" data-filter="WhatsApp">
+        <button class="btn btn-outline-primary filter-tab-btn" data-filter="WhatsApp">
           <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp
-        </button>
-        <button class="btn btn-outline-secondary filter-tab-btn" data-filter="PayPal">
-          <i class="bi bi-paypal text-primary me-1"></i> PayPal
         </button>
       </div>
 

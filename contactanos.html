@@ -122,29 +122,29 @@
 
                     <!-- Preferencias -->
                     <div class="mb-4">
-                        <label style="display: block; font-weight: 600; font-size: 14px; color: #1a1a1a; margin-bottom: 12px;">
+                        <label class="form-label fw-semibold">
                             Preferencia de contacto
                         </label>
-                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                            <label style="flex: 1; min-width: 150px; cursor: pointer;">
+                        <div class="d-flex gap-2 flex-wrap">
+                            <label style="flex: 1; min-width: 130px; cursor: pointer;">
                                 <input type="checkbox" id="prefLlamada" name="preferencia" value="Llamada telefónica" class="pref-checkbox" style="display: none;">
-                                <div id="prefLlamadaBox" class="pref-box" style="padding: 12px 20px; border: 1.5px solid #e0e0e0; border-radius: 12px; text-align: center; transition: all 0.3s; user-select: none;">
-                                    <i class="bi bi-telephone" style="font-size: 20px; display: block; margin-bottom: 4px;"></i>
-                                    <span style="font-size: 14px; font-weight: 500;">Llamada</span>
+                                <div id="prefLlamadaBox" class="pref-box p-3 rounded-3 text-center transition-all border">
+                                    <i class="bi bi-telephone fs-5 d-block mb-1"></i>
+                                    <span class="small fw-semibold">Llamada</span>
                                 </div>
                             </label>
-                            <label style="flex: 1; min-width: 150px; cursor: pointer;">
+                            <label style="flex: 1; min-width: 130px; cursor: pointer;">
                                 <input type="checkbox" id="prefWhatsapp" name="preferencia" value="Whatsapp" class="pref-checkbox" style="display: none;">
-                                <div id="prefWhatsappBox" class="pref-box" style="padding: 12px 20px; border: 1.5px solid #e0e0e0; border-radius: 12px; text-align: center; transition: all 0.3s; user-select: none;">
-                                    <i class="bi bi-whatsapp" style="font-size: 20px; display: block; margin-bottom: 4px;"></i>
-                                    <span style="font-size: 14px; font-weight: 500;">WhatsApp</span>
+                                <div id="prefWhatsappBox" class="pref-box p-3 rounded-3 text-center transition-all border">
+                                    <i class="bi bi-whatsapp fs-5 d-block mb-1"></i>
+                                    <span class="small fw-semibold">WhatsApp</span>
                                 </div>
                             </label>
-                            <label style="flex: 1; min-width: 150px; cursor: pointer;">
+                            <label style="flex: 1; min-width: 130px; cursor: pointer;">
                                 <input type="checkbox" id="prefCorreo" name="preferencia" value="Correo" class="pref-checkbox" style="display: none;">
-                                <div id="prefCorreoBox" class="pref-box" style="padding: 12px 20px; border: 1.5px solid #e0e0e0; border-radius: 12px; text-align: center; transition: all 0.3s; user-select: none;">
-                                    <i class="bi bi-envelope" style="font-size: 20px; display: block; margin-bottom: 4px;"></i>
-                                    <span style="font-size: 14px; font-weight: 500;">Correo</span>
+                                <div id="prefCorreoBox" class="pref-box p-3 rounded-3 text-center transition-all border">
+                                    <i class="bi bi-envelope fs-5 d-block mb-1"></i>
+                                    <span class="small fw-semibold">Correo</span>
                                 </div>
                             </label>
                         </div>
@@ -153,26 +153,24 @@
                     <!-- Botón enviar -->
                     <button 
                         type="submit" 
-                        style="width: 100%; padding: 16px; background: #007BFF; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px;"
-                        onmouseover="this.style.background='#0056CC'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 16px rgba(0,123,255,0.3)'"
-                        onmouseout="this.style.background='#007BFF'; this.style.transform='translateY(0)'; this.style.boxShadow='none'">
-                        <i class="bi bi-whatsapp" style="font-size: 20px;"></i>
+                        class="btn btn-primary w-100 py-3 rounded-3 fw-bold d-flex align-items-center justify-content-center gap-2 shadow-sm fs-6">
+                        <i class="bi bi-whatsapp fs-5"></i>
                         <span>Enviar por WhatsApp</span>
                     </button>
                 </form>
             </div>
 
             <!-- Info adicional -->
-            <div class="contact-extra" style="margin-top: 32px; text-align: center;">
-                <p style="color: #666; font-size: 14px; margin-bottom: 16px;">
+            <div class="contact-extra mt-4 text-center">
+                <p class="text-muted small mb-3">
                     También puedes contactarnos directamente:
                 </p>
-                <div style="display: flex; gap: 24px; justify-content: center; flex-wrap: wrap;">
-                    <a href="tel:+51916907657" style="color: #007BFF; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 6px;">
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a href="tel:+51916907657" class="footer-phone text-decoration-none fw-semibold text-primary d-flex align-items-center gap-2">
                         <i class="bi bi-telephone"></i> +51 916 907 657
                     </a>
-                    <a href="mailto:edark.import@gmail.com" style="color: #007BFF; text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 6px;">
-                        <i class="bi bi-envelope"></i> edark.import@gmail.com
+                    <a href="mailto:contacto@syverluma.com" class="footer-email text-decoration-none fw-semibold text-primary d-flex align-items-center gap-2">
+                        <i class="bi bi-envelope"></i> contacto@syverluma.com
                     </a>
                 </div>
             </div>

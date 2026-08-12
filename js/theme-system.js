@@ -106,7 +106,7 @@
                 border-bottom: 1px solid rgba(${primaryRgb}, 0.15) !important;
             }
 
-            /* 3. Tarjetas, Paneles, Filtros, Formulario de Contacto (Derivados de cardBg) */
+            /* 3. Tarjetas, Paneles, Filtros, Formulario de Contacto, Nosotros y Pedidos (Derivados de cardBg) */
             .card,
             .filter-card-modern,
             .control-bar-modern,
@@ -119,14 +119,30 @@
             .dropdown-menu,
             .contact-section .card,
             .contact-card,
+            .seccion-nosotros .card,
+            .stat-card-pedido,
+            .pedido-card,
+            .pref-box,
             .bg-white,
             .bg-light,
             .live-search-dropdown {
                 background-color: ${cardBg} !important;
                 background: ${cardBg} !important;
-                border: 1px solid rgba(${primaryRgb}, 0.18) !important;
+                border: 1px solid rgba(${primaryRgb}, 0.22) !important;
                 color: ${textColor} !important;
                 box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+            }
+
+            /* Garantizar lectura limpia y alto contraste en textos de Nosotros, Contacto y Pedidos */
+            .seccion-nosotros p,
+            .seccion-nosotros li,
+            .seccion-nosotros div,
+            .contact-section label,
+            .contact-section p,
+            .stat-card-pedido span,
+            .pedido-card span,
+            .pedido-card p {
+                color: ${textColor} !important;
             }
 
             /* Acordeones de Filtros */
