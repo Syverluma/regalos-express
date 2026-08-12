@@ -1,13 +1,13 @@
 // Configuración de Firebase
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBscPH-0R78LauWxJuLysjWK8QhBBvMHcU",
-  authDomain: "edark-store.firebaseapp.com",
-  projectId: "edark-store",
-  storageBucket: "edark-store.firebasestorage.app",
-  messagingSenderId: "281209786595",
-  appId: "1:281209786595:web:d64f98dd051a54ef8975d6",
-  measurementId: "G-E7QS4JDK5C"
+  apiKey: "AIzaSyBVWMCWYvLqIKcJRyDkbyB6MHkrMgL55FY",
+  authDomain: "syverluma-regalos.firebaseapp.com",
+  projectId: "syverluma-regalos",
+  storageBucket: "syverluma-regalos.firebasestorage.app",
+  messagingSenderId: "195527936578",
+  appId: "1:195527936578:web:e9f75305005fa9d59ffbdb",
+  measurementId: "G-8CJDLPJPHB"
 };
 
 // Exponer config global
