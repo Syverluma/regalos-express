@@ -821,9 +821,9 @@
                             <small class="text-muted">Sugerido: Imagen cuadrada 512x512px.</small>
                         </div>
 
-                        <!-- Selector de Colores -->
+                        <!-- Selector de Colores Harmonizados -->
                         <div class="col-md-3 mb-3">
-                            <label class="form-label fw-semibold">Color Primario de Marca</label>
+                            <label class="form-label fw-semibold">Color Primario (Botones y Detalles)</label>
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorPrimaryPicker" value="#2563eb" onchange="document.getElementById('cfgColorPrimary').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorPrimary" value="#2563eb" placeholder="#2563eb" onchange="document.getElementById('cfgColorPrimaryPicker').value = this.value">
@@ -837,13 +837,20 @@
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
-                            <label class="form-label fw-semibold">Color Fondo Oscuro</label>
+                            <label class="form-label fw-semibold">Color de Fondo Principal</label>
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorDarkBgPicker" value="#0f172a" onchange="document.getElementById('cfgColorDarkBg').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorDarkBg" value="#0f172a" placeholder="#0f172a" onchange="document.getElementById('cfgColorDarkBgPicker').value = this.value">
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
+                            <label class="form-label fw-semibold">Color de Tarjetas y Filtros</label>
+                            <div class="d-flex align-items-center gap-2">
+                                <input type="color" class="form-control form-control-color" id="cfgColorCardBgPicker" value="#1e293b" onchange="document.getElementById('cfgColorCardBg').value = this.value">
+                                <input type="text" class="form-control" id="cfgColorCardBg" value="#1e293b" placeholder="#1e293b" onchange="document.getElementById('cfgColorCardBgPicker').value = this.value">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
                             <label class="form-label fw-semibold">Modo Visual Predeterminado</label>
                             <select class="form-select" id="cfgModoPredeterminado">
                                 <option value="oscuro">Modo Oscuro (Dark Elegante)</option>
@@ -4009,8 +4016,11 @@
 
                 const elCDark = document.getElementById('cfgColorDarkBg');
                 const elCDarkP = document.getElementById('cfgColorDarkBgPicker');
-                if (elCDark) elCDark.value = cDark;
-                if (elCDarkP) elCDarkP.value = cDark;
+                const elCCard = document.getElementById('cfgColorCardBg');
+                const elCCardP = document.getElementById('cfgColorCardBgPicker');
+                const cCard = configuracionCache.colorCardBg || (configuracionCache.colorDarkBg ? configuracionCache.colorDarkBg : '#1e293b');
+                if (elCCard) elCCard.value = cCard;
+                if (elCCardP) elCCardP.value = cCard;
 
                 const elModo = document.getElementById('cfgModoPredeterminado');
                 if (elModo) elModo.value = configuracionCache.modoPredeterminado || 'oscuro';
@@ -4098,6 +4108,7 @@
                 colorPrimary: (document.getElementById('cfgColorPrimary')?.value || '#2563eb').trim(),
                 colorSecondary: (document.getElementById('cfgColorSecondary')?.value || '#10b981').trim(),
                 colorDarkBg: (document.getElementById('cfgColorDarkBg')?.value || '#0f172a').trim(),
+                colorCardBg: (document.getElementById('cfgColorCardBg')?.value || '#1e293b').trim(),
                 modoPredeterminado: document.getElementById('cfgModoPredeterminado')?.value || 'oscuro',
                 frasesBanner: (document.getElementById('cfgFrasesBanner')?.value || '').trim(),
                 nosotrosHabilitado: document.getElementById('cfgNosotrosHabilitado') ? document.getElementById('cfgNosotrosHabilitado').checked : true,

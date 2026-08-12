@@ -15,6 +15,7 @@
         colorPrimary: '#2563eb',
         colorSecondary: '#10b981',
         colorDarkBg: '#0f172a',
+        colorCardBg: '#1e293b',
         modoPredeterminado: 'oscuro',
         frasesBanner: 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada los 7 días de la semana',
         cotizadorHabilitado: true,
@@ -42,18 +43,20 @@
         return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
     }
 
-    // Inyectar variables CSS universales para sobrescribir el fondo completo y TODOS los colores del sitio
+    // Inyectar variables CSS universales para armonizar el 100% de la tienda (Fondo, Tarjetas, Filtros, Navbar, Footer)
     function aplicarEstilosTema(config) {
         const root = document.documentElement;
         const primary = config.colorPrimary || THEME_DEFAULTS.colorPrimary;
         const secondary = config.colorSecondary || THEME_DEFAULTS.colorSecondary;
         const darkBg = config.colorDarkBg || THEME_DEFAULTS.colorDarkBg;
+        const cardBgCustom = config.colorCardBg || (darkBg ? darkBg : THEME_DEFAULTS.colorCardBg);
         const modo = config.modoPredeterminado || 'oscuro';
         const esModoClaro = (modo === 'claro');
 
         const primaryRgb = hexToRgb(primary);
         const secondaryRgb = hexToRgb(secondary);
         const darkBgRgb = hexToRgb(darkBg);
+        const cardBgRgb = hexToRgb(cardBgCustom);
 
         root.style.setProperty('--brand-primary', primary);
         root.style.setProperty('--brand-secondary', secondary);
@@ -69,7 +72,7 @@
         const bgBase = esModoClaro ? '#f8fafc' : darkBg;
         const bgBaseRgb = esModoClaro ? '248, 250, 252' : darkBgRgb;
         const textColor = esModoClaro ? '#0f172a' : '#ffffff';
-        const cardBg = esModoClaro ? '#ffffff' : `rgba(${darkBgRgb}, 0.95)`;
+        const cardBg = esModoClaro ? (config.colorCardBg || '#ffffff') : cardBgCustom;
 
         styleTag.innerHTML = `
             :root {
@@ -80,29 +83,73 @@
                 --bg-dark-custom: ${darkBg} !important;
             }
             
-            /* Fondo Universal de la Tienda (Soporte Modo Claro y Modo Oscuro) */
-            body, body.modo-oscuro, body.modo-claro, html {
+            /* 1. Fondo Principal de la Tienda y Secciones Intermedias (Eliminar Negro Duro) */
+            body, body.modo-oscuro, body.modo-claro, html, section, .py-5, #seccionCatalogo, #servicios-marquee {
                 background-color: ${bgBase} !important;
-                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.2) 0%, ${bgBase} 75%) !important;
+                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.18) 0%, ${bgBase} 75%) !important;
                 color: ${textColor} !important;
             }
 
-            /* Header Hero Banner Principal */
-            header.gradient-bg, header.hero-banner, .gradient-bg {
-                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.3) 0%, ${bgBase} 100%) !important;
+            /* 2. Header Hero Banner Principal */
+            header, header.gradient-bg, header.hero-banner, .gradient-bg, .blog-hero, .post-hero {
+                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.25) 0%, ${bgBase} 100%) !important;
                 border-bottom: 2px solid ${primary} !important;
             }
 
-            /* Tarjetas de Encabezado (Hero Card) */
-            .banner-card {
-                background: rgba(${bgBaseRgb}, 0.85) !important;
-                border: 1px solid rgba(${primaryRgb}, 0.35) !important;
-                box-shadow: 0 10px 40px rgba(${primaryRgb}, 0.25) !important;
-                backdrop-filter: blur(12px) !important;
+            /* 3. Tarjetas, Paneles, Filtros y Acordeones Armonizados */
+            .card,
+            .filter-card-modern,
+            .control-bar-modern,
+            .product-card-premium,
+            .banner-card,
+            .accordion-item,
+            .accordion-body,
+            .modal-content,
+            .offcanvas,
+            .dropdown-menu {
+                background-color: ${cardBg} !important;
+                background: ${cardBg} !important;
+                border: 1px solid rgba(${primaryRgb}, 0.22) !important;
+                color: ${textColor} !important;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+            }
+
+            /* Botones del Acordeón de Filtros (Eliminar Gris/Negro Desentonado) */
+            .accordion-button,
+            .filter-card-modern .accordion-button {
+                background-color: ${cardBg} !important;
+                color: ${textColor} !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.15) !important;
+            }
+
+            .accordion-button:not(.collapsed),
+            .filter-card-modern .accordion-button:not(.collapsed) {
+                background-color: rgba(${primaryRgb}, 0.15) !important;
+                color: ${primary} !important;
+                box-shadow: none !important;
+            }
+
+            /* 4. Buscador, Selects e Inputs de Control */
+            .control-bar-modern input,
+            .control-bar-modern select,
+            .control-bar-modern .input-group,
+            .product-card-premium .product-img-wrapper,
+            #buscarProductoInput,
+            #ordenarSelect {
+                background-color: rgba(${primaryRgb}, 0.08) !important;
+                background: rgba(${primaryRgb}, 0.08) !important;
+                border-color: rgba(${primaryRgb}, 0.3) !important;
                 color: ${textColor} !important;
             }
 
-            /* Títulos principales y luces ambientales */
+            /* 5. Títulos principales y luces ambientales */
+            h1, h2, h3, h4, h5, h6, .display-6, .section-title {
+                color: ${textColor} !important;
+            }
+            .text-muted {
+                color: ${textColor}aa !important;
+            }
+
             .logo-edark, .store-name-display {
                 color: ${primary} !important;
                 text-shadow: 0 0 20px rgba(${primaryRgb}, 0.5) !important;
@@ -119,38 +166,19 @@
                 background: rgba(${secondaryRgb}, 0.35) !important;
             }
 
-            /* Tarjetas de Producto, Filtros, Paneles y Navbar en Modo Oscuro (Eliminar completamente el azul por defecto) */
-            body.modo-oscuro .product-card-premium,
-            body.modo-oscuro .filter-card-modern,
-            body.modo-oscuro .control-bar-modern,
-            body.modo-oscuro .nav-pill-indicator,
-            body.modo-oscuro .article-card,
-            body.modo-oscuro .card,
-            body.modo-oscuro .modal-content,
-            body.modo-oscuro .offcanvas,
-            body.modo-oscuro .dropdown-menu,
-            body.modo-oscuro .glass-navbar,
-            body.modo-oscuro #mainNavbar,
-            body.modo-oscuro .accordion-item,
-            body.modo-oscuro .accordion-body,
-            .filter-card-modern,
-            .control-bar-modern,
-            .product-card-premium,
-            .nav-pill-indicator,
-            .card, .modal-content, .offcanvas, .dropdown-menu {
-                background-color: ${cardBg} !important;
-                background: ${cardBg} !important;
-                border-color: rgba(${primaryRgb}, 0.25) !important;
+            /* 6. Navbar Flotante Glass */
+            .glass-navbar, #mainNavbar {
+                background-color: rgba(${cardBgRgb}, 0.88) !important;
+                backdrop-filter: blur(12px) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.25) !important;
                 color: ${textColor} !important;
             }
 
-            body.modo-oscuro .product-card-premium .product-img-wrapper,
-            body.modo-oscuro .control-bar-modern .input-group,
-            body.modo-oscuro .control-bar-modern input,
-            body.modo-oscuro .control-bar-modern select {
-                background-color: rgba(${darkBgRgb}, 0.6) !important;
-                background: rgba(${darkBgRgb}, 0.6) !important;
-                border-color: rgba(${primaryRgb}, 0.2) !important;
+            /* 7. Footer Estilizado Armonioso (Eliminar Negro Rígido) */
+            footer, footer.bg-dark, .py-5.bg-dark {
+                background-color: ${bgBase} !important;
+                background: ${bgBase} !important;
+                border-top: 2px solid ${primary} !important;
                 color: ${textColor} !important;
             }
 
