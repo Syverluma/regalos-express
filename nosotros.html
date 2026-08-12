@@ -52,31 +52,29 @@
         <div class="position-absolute rounded-circle" style="top: -80px; right: 15%; width: 450px; height: 450px; background: rgba(139, 92, 246, 0.18); filter: blur(100px); pointer-events: none; z-index: 1;"></div>
         <div class="container px-4 px-lg-5 text-center position-relative" style="z-index: 2;">
             <div class="banner-card mx-auto text-center p-4 rounded-3 shadow-lg w-100" style="max-width:850px;">
-                <h1 class="display-4 fw-bold text-white mb-2" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">EDARK ALPHA TECHNOLOGIES</h1>
-                <p class="lead text-info mb-0" style="font-size:1.15rem; font-weight: 500;">
+                <h1 class="display-4 fw-bold text-white mb-2 store-name-display" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">Syverluma Store</h1>
+                <p class="lead text-info mb-0 store-slogan-display" style="font-size:1.15rem; font-weight: 500;">
                     Innovación, tecnología y confianza para tu evolución digital.<br>
-                    Líderes en soluciones electrónicas y transformación tecnológica en Perú y Latinoamérica.
+                    Líderes en soluciones electrónicas y transformación tecnológica.
                 </p>
             </div>
         </div>
     </header>
     <!-- Fin Banner -->
 
-    <!-- SECCIÓN QUIÉNES SOMOS EDARK ALPHA TECHNOLOGIES -->
-    <section class="py-5 bg-white" id="quienes-somos">
+    <!-- SECCIÓN QUIÉNES SOMOS -->
+    <section class="py-5 bg-white seccion-nosotros" id="seccion-nosotros">
         <div class="container px-4 px-lg-5 mb-5">
             <div class="row justify-content-center">
                 <div class="col-12 col-lg-10 mb-4">
                     <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius:1.5rem;">
                         <div class="d-flex align-items-center mb-3">
                             <span style="font-size:2.2rem; margin-right:1rem;">🧬</span>
-                            <h2 class="fw-bold mb-0">Quiénes Somos</h2>
+                            <h2 class="fw-bold mb-0 nosotros-titulo">Quiénes Somos</h2>
                         </div>
-                        <p>En <b>eDark Alpha Technologies</b>, creemos que cada avance comienza con una visión clara.
-                            Somos una empresa peruana dedicada a acercar la tecnología de vanguardia a personas y
-                            empresas que buscan soluciones confiables, accesibles y con propósito. Nuestra esencia está
-                            en el nombre: <b>eDark</b> representa lo oculto, lo sofisticado, lo que aún no ha sido
-                            descubierto. <b>Alpha</b> simboliza el origen, el liderazgo y la innovación constante.</p>
+                        <div class="nosotros-texto lead fs-6">
+                            Somos una empresa dedicada a ofrecer productos y servicios de alta calidad, diseñados a la medida de nuestros clientes.
+                        </div>
                         <p class="mb-2">Nacimos con la visión de liderar el futuro tecnológico en Perú y Latinoamérica,
                             ofreciendo soluciones electrónicas de alta calidad que combinan innovación, accesibilidad y
                             diseño inteligente.</p>
@@ -159,8 +157,10 @@
     <!-- Footer-->
     <div id="footer"></div>
     <!-- Bootstrap core JS-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Core theme JS-->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme-system.js"></script>
     <script src="js/scripts.js"></script>
     <!-- Animación de tarjetas -->
     <script>

@@ -769,12 +769,26 @@
 
                         <!-- Logotipos -->
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">URL de Logo Horizontal (Header/Navbar)</label>
-                            <input type="url" class="form-control" id="cfgLogoPrincipalUrl" placeholder="https://..." />
+                            <label class="form-label fw-semibold">Logo Horizontal de la Empresa (Navbar / Header)</label>
+                            <div class="input-group">
+                                <input type="url" class="form-control" id="cfgLogoPrincipalUrl" placeholder="https://... o sube un archivo" />
+                                <label class="btn btn-outline-primary" for="fileLogoPrincipal">
+                                    <i class="bi bi-upload me-1"></i>Subir
+                                </label>
+                                <input type="file" id="fileLogoPrincipal" class="d-none" accept="image/*" onchange="subirLogoDirecto(this, 'cfgLogoPrincipalUrl')">
+                            </div>
+                            <small class="text-muted">Formatos sugeridos: PNG transparente o SVG.</small>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label fw-semibold">URL de Isotipo / Ícono (Favicon y Chatbot)</label>
-                            <input type="url" class="form-control" id="cfgLogoIsotipoUrl" placeholder="https://..." />
+                            <label class="form-label fw-semibold">Isotipo / Ícono de la Marca (Favicon y Chatbot)</label>
+                            <div class="input-group">
+                                <input type="url" class="form-control" id="cfgLogoIsotipoUrl" placeholder="https://... o sube un archivo" />
+                                <label class="btn btn-outline-primary" for="fileLogoIsotipo">
+                                    <i class="bi bi-upload me-1"></i>Subir
+                                </label>
+                                <input type="file" id="fileLogoIsotipo" class="d-none" accept="image/*" onchange="subirLogoDirecto(this, 'cfgLogoIsotipoUrl')">
+                            </div>
+                            <small class="text-muted">Sugerido: Imagen cuadrada 512x512px.</small>
                         </div>
 
                         <!-- Selector de Colores -->
@@ -797,6 +811,55 @@
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorDarkBgPicker" value="#0f172a" onchange="document.getElementById('cfgColorDarkBg').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorDarkBg" value="#0f172a" placeholder="#0f172a" onchange="document.getElementById('cfgColorDarkBgPicker').value = this.value">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Módulo Nosotros (Quiénes Somos) -->
+                    <h5 class="text-primary fw-bold mb-3"><i class="bi bi-building me-2"></i>Módulo Nosotros (Quiénes Somos)</h5>
+                    <div class="row bg-light p-3 rounded border mb-4 text-dark">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch fs-6">
+                                <input class="form-check-input" type="checkbox" id="cfgNosotrosHabilitado" checked>
+                                <label class="form-check-label fw-semibold" for="cfgNosotrosHabilitado">Activar Módulo y Sección "Nosotros" en la tienda</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-semibold">Título de la sección</label>
+                            <input type="text" class="form-control" id="cfgNosotrosTitulo" placeholder="Ej: Quiénes Somos / Nuestra Historia" />
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-semibold">Descripción o Historia de la Empresa</label>
+                            <textarea class="form-control" id="cfgNosotrosTexto" rows="4" placeholder="Escribe aquí la historia o propuesta de valor de tu negocio..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Módulo Servicios -->
+                    <h5 class="text-primary fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Módulo de Servicios Adicionales</h5>
+                    <div class="row bg-light p-3 rounded border mb-4 text-dark">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch fs-6">
+                                <input class="form-check-input" type="checkbox" id="cfgServiciosHabilitado" checked>
+                                <label class="form-check-label fw-semibold" for="cfgServiciosHabilitado">Activar Módulo de Servicios en la Tienda</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Título de Servicios</label>
+                            <input type="text" class="form-control" id="cfgServiciosTitulo" placeholder="Ej: Nuestros Servicios Especiales" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Subtítulo de Servicios</label>
+                            <input type="text" class="form-control" id="cfgServiciosSubtitulo" placeholder="Ej: Soluciones a la medida para eventos, regalos y sorpresas" />
+                        </div>
+                    </div>
+
+                    <!-- Módulo Blog & Artículos -->
+                    <h5 class="text-primary fw-bold mb-3"><i class="bi bi-journal-text me-2"></i>Módulo Blog & Novedades</h5>
+                    <div class="row bg-light p-3 rounded border mb-4 text-dark">
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch fs-6">
+                                <input class="form-check-input" type="checkbox" id="cfgBlogHabilitado" checked>
+                                <label class="form-check-label fw-semibold" for="cfgBlogHabilitado">Activar Módulo de Blog y Artículos</label>
                             </div>
                         </div>
                     </div>
@@ -3580,6 +3643,36 @@
             `).join('');
         }
 
+        // Subida rápida de Logo / Isotipo por archivo
+        async function subirLogoDirecto(fileInput, targetInputId) {
+            const file = fileInput.files[0];
+            if (!file) return;
+            const targetInput = document.getElementById(targetInputId);
+            if (!targetInput) return;
+            const statusEl = document.getElementById('cfgStatus');
+            if (statusEl) statusEl.innerHTML = '<small class="text-primary"><i class="bi bi-hourglass-split"></i> Subiendo imagen...</small>';
+            try {
+                let imgUrl = '';
+                const apiKey = (window.configuracionCache && window.configuracionCache.imgbbApiKey) ? window.configuracionCache.imgbbApiKey.trim() : '';
+                if (apiKey) {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if (data.success) imgUrl = data.data.url;
+                }
+                if (!imgUrl) {
+                    imgUrl = await comprimirImagenCanvas(file, 800, 0.85);
+                }
+                targetInput.value = imgUrl;
+                if (statusEl) statusEl.innerHTML = '<small class="text-success"><i class="bi bi-check-circle"></i> Imagen cargada</small>';
+            } catch (e) {
+                console.error('Error subiendo logo:', e);
+                alert('Error al procesar la imagen: ' + e.message);
+                if (statusEl) statusEl.innerHTML = '<small class="text-danger">Error subiendo imagen</small>';
+            }
+        }
+
         // ===== CONFIGURACIÓN (Firestore: config/general) =====
         async function cargarConfiguracion() {
             const statusEl = document.getElementById('cfgStatus');
@@ -3587,7 +3680,7 @@
             try {
                 const snap = await db.collection('config').doc('general').get();
                 configuracionCache = snap.exists ? snap.data() : {};
-                document.getElementById('cfgNombreTienda').value = configuracionCache.nombreTienda || 'eDark Import';
+                document.getElementById('cfgNombreTienda').value = configuracionCache.nombreTienda || 'Syverluma Store';
                 const elSlogan = document.getElementById('cfgSloganTienda');
                 if (elSlogan) elSlogan.value = configuracionCache.sloganTienda || '';
                 const elTel = document.getElementById('cfgTelefonoWhatsapp');
@@ -3619,6 +3712,24 @@
                 const elCDarkP = document.getElementById('cfgColorDarkBgPicker');
                 if (elCDark) elCDark.value = cDark;
                 if (elCDarkP) elCDarkP.value = cDark;
+
+                // Módulos Informativos
+                const elNosHab = document.getElementById('cfgNosotrosHabilitado');
+                if (elNosHab) elNosHab.checked = configuracionCache.nosotrosHabilitado !== false;
+                const elNosTit = document.getElementById('cfgNosotrosTitulo');
+                if (elNosTit) elNosTit.value = configuracionCache.nosotrosTitulo || 'Quiénes Somos';
+                const elNosTxt = document.getElementById('cfgNosotrosTexto');
+                if (elNosTxt) elNosTxt.value = configuracionCache.nosotrosTexto || 'Somos una empresa dedicada a ofrecer productos y servicios de alta calidad, diseñados a la medida de nuestros clientes.';
+
+                const elSerHab = document.getElementById('cfgServiciosHabilitado');
+                if (elSerHab) elSerHab.checked = configuracionCache.serviciosHabilitado !== false;
+                const elSerTit = document.getElementById('cfgServiciosTitulo');
+                if (elSerTit) elSerTit.value = configuracionCache.serviciosTitulo || 'Nuestros Servicios';
+                const elSerSub = document.getElementById('cfgServiciosSubtitulo');
+                if (elSerSub) elSerSub.value = configuracionCache.serviciosSubtitulo || 'Soluciones integrales diseñadas para potenciar tu experiencia.';
+
+                const elBlogHab = document.getElementById('cfgBlogHabilitado');
+                if (elBlogHab) elBlogHab.checked = configuracionCache.blogHabilitado !== false;
 
                 const elCotHab = document.getElementById('cfgCotizadorHabilitado');
                 if (elCotHab) elCotHab.checked = configuracionCache.cotizadorHabilitado !== false;
@@ -3662,7 +3773,7 @@
             const elEnv = document.getElementById('cfgTextoEnvio');
             const elGar = document.getElementById('cfgTextoGarantia');
             const data = {
-                nombreTienda: document.getElementById('cfgNombreTienda').value.trim() || 'eDark Import',
+                nombreTienda: document.getElementById('cfgNombreTienda').value.trim() || 'Syverluma Store',
                 sloganTienda: (document.getElementById('cfgSloganTienda')?.value || '').trim(),
                 telefonoWhatsapp: (document.getElementById('cfgTelefonoWhatsapp')?.value || '').trim() || '51916907657',
                 emailContacto: (document.getElementById('cfgEmailContacto')?.value || '').trim(),
@@ -3672,6 +3783,13 @@
                 colorPrimary: (document.getElementById('cfgColorPrimary')?.value || '#2563eb').trim(),
                 colorSecondary: (document.getElementById('cfgColorSecondary')?.value || '#10b981').trim(),
                 colorDarkBg: (document.getElementById('cfgColorDarkBg')?.value || '#0f172a').trim(),
+                nosotrosHabilitado: document.getElementById('cfgNosotrosHabilitado') ? document.getElementById('cfgNosotrosHabilitado').checked : true,
+                nosotrosTitulo: (document.getElementById('cfgNosotrosTitulo')?.value || 'Quiénes Somos').trim(),
+                nosotrosTexto: (document.getElementById('cfgNosotrosTexto')?.value || '').trim(),
+                serviciosHabilitado: document.getElementById('cfgServiciosHabilitado') ? document.getElementById('cfgServiciosHabilitado').checked : true,
+                serviciosTitulo: (document.getElementById('cfgServiciosTitulo')?.value || 'Nuestros Servicios').trim(),
+                serviciosSubtitulo: (document.getElementById('cfgServiciosSubtitulo')?.value || '').trim(),
+                blogHabilitado: document.getElementById('cfgBlogHabilitado') ? document.getElementById('cfgBlogHabilitado').checked : true,
                 cotizadorHabilitado: document.getElementById('cfgCotizadorHabilitado') ? document.getElementById('cfgCotizadorHabilitado').checked : true,
                 cotizadorTitulo: (document.getElementById('cfgCotizadorTitulo')?.value || 'Cotizador Personalizado').trim(),
                 cotizadorSubtitulo: (document.getElementById('cfgCotizadorSubtitulo')?.value || 'Arma tu pedido ideal a la medida').trim(),
