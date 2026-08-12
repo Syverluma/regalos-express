@@ -34,7 +34,7 @@
         return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
     }
 
-    // Inyectar variables CSS universales para sobscribir TODOS los elementos primarios y secundarios
+    // Inyectar variables CSS universales para sobrescribir el fondo completo y TODOS los colores del sitio
     function aplicarEstilosTema(config) {
         const root = document.documentElement;
         const primary = config.colorPrimary || THEME_DEFAULTS.colorPrimary;
@@ -42,6 +42,7 @@
         const darkBg = config.colorDarkBg || THEME_DEFAULTS.colorDarkBg;
         const primaryRgb = hexToRgb(primary);
         const secondaryRgb = hexToRgb(secondary);
+        const darkBgRgb = hexToRgb(darkBg);
 
         root.style.setProperty('--brand-primary', primary);
         root.style.setProperty('--brand-secondary', secondary);
@@ -60,10 +61,60 @@
                 --bs-primary-rgb: ${primaryRgb} !important;
                 --bs-success: ${secondary} !important;
                 --bs-success-rgb: ${secondaryRgb} !important;
+                --bg-dark-custom: ${darkBg} !important;
             }
-            body.modo-oscuro {
+            
+            /* Fondo Universal de la Tienda */
+            body, body.modo-oscuro, html, html.modo-oscuro {
                 background-color: ${darkBg} !important;
+                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.22) 0%, ${darkBg} 75%) !important;
+                color: #f8fafc !important;
             }
+
+            /* Header Hero Banner Principal */
+            header.gradient-bg, header.hero-banner, .gradient-bg {
+                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.3) 0%, ${darkBg} 100%) !important;
+                border-bottom: 2px solid ${primary} !important;
+            }
+
+            /* Tarjetas de Encabezado (Hero Card) */
+            .banner-card {
+                background: rgba(${darkBgRgb}, 0.8) !important;
+                border: 1px solid rgba(${primaryRgb}, 0.35) !important;
+                box-shadow: 0 10px 40px rgba(${primaryRgb}, 0.25) !important;
+                backdrop-filter: blur(12px) !important;
+            }
+
+            /* Títulos principales y luces ambientales */
+            .logo-edark, .store-name-display {
+                color: ${primary} !important;
+                text-shadow: 0 0 20px rgba(${primaryRgb}, 0.6) !important;
+            }
+            .sub-edark, .store-slogan-display {
+                color: ${secondary} !important;
+            }
+
+            /* Halos de luz ambient */
+            header .rounded-circle:nth-child(1) {
+                background: rgba(${primaryRgb}, 0.35) !important;
+            }
+            header .rounded-circle:nth-child(2) {
+                background: rgba(${secondaryRgb}, 0.35) !important;
+            }
+
+            /* Tarjetas de Producto y Paneles (Dark Mode Overrides) */
+            body.modo-oscuro .card,
+            body.modo-oscuro .modal-content,
+            body.modo-oscuro .offcanvas,
+            body.modo-oscuro .dropdown-menu,
+            body.modo-oscuro .glass-navbar,
+            .card, .modal-content, .offcanvas, .dropdown-menu {
+                background-color: rgba(${darkBgRgb}, 0.92) !important;
+                border-color: rgba(${primaryRgb}, 0.25) !important;
+                color: #ffffff !important;
+            }
+
+            /* Sobrescribir Clases de Color de Bootstrap */
             .bg-primary, .bg-primary-edark { 
                 background-color: ${primary} !important; 
             }
@@ -73,10 +124,12 @@
             .btn-primary { 
                 background-color: ${primary} !important; 
                 border-color: ${primary} !important; 
+                color: #ffffff !important;
             }
             .btn-primary:hover, .btn-primary:focus {
                 background-color: ${primary} !important;
-                filter: brightness(0.9);
+                filter: brightness(1.15);
+                box-shadow: 0 0 15px rgba(${primaryRgb}, 0.5) !important;
             }
             .btn-outline-primary { 
                 color: ${primary} !important; 
@@ -92,6 +145,8 @@
             .badge.bg-primary { 
                 background-color: ${primary} !important; 
             }
+
+            /* Color Secundario */
             .text-success { 
                 color: ${secondary} !important; 
             }
@@ -101,10 +156,16 @@
             .btn-success { 
                 background-color: ${secondary} !important; 
                 border-color: ${secondary} !important; 
+                color: #ffffff !important;
+            }
+            .btn-success:hover {
+                filter: brightness(1.15);
+                box-shadow: 0 0 15px rgba(${secondaryRgb}, 0.5) !important;
             }
             .badge.bg-success { 
                 background-color: ${secondary} !important; 
             }
+
             /* Sobrescribir enlaces y hover en navbar */
             #mainNavbar a.nav-link:hover,
             #mainNavbar a.nav-link.active,
@@ -117,10 +178,6 @@
             body.modo-oscuro .glass-navbar a.nav-link:hover,
             body.modo-oscuro .glass-navbar a.nav-link.active {
                 color: ${secondary} !important;
-            }
-            /* Encabezados y héroe */
-            header.hero-banner, header.py-5 {
-                border-bottom: 2px solid ${primary} !important;
             }
         `;
     }
@@ -162,11 +219,11 @@
         });
         
         // Banner Hero en index.html
-        const heroTitle = document.querySelector('.hero-banner h1, header h1.display-4');
+        const heroTitle = document.querySelector('.hero-banner h1, header h1.display-4, .logo-edark');
         if (heroTitle && c.nombreTienda) {
             heroTitle.textContent = c.nombreTienda.toUpperCase();
         }
-        const heroSub = document.querySelector('.hero-banner p, header p.lead');
+        const heroSub = document.querySelector('.hero-banner p, header p.lead, .sub-edark');
         if (heroSub && c.sloganTienda) {
             heroSub.textContent = c.sloganTienda;
         }
