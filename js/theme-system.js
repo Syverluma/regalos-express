@@ -69,7 +69,7 @@
         const bgBase = esModoClaro ? '#f8fafc' : darkBg;
         const bgBaseRgb = esModoClaro ? '248, 250, 252' : darkBgRgb;
         const textColor = esModoClaro ? '#0f172a' : '#ffffff';
-        const cardBg = esModoClaro ? '#ffffff' : `rgba(${darkBgRgb}, 0.92)`;
+        const cardBg = esModoClaro ? '#ffffff' : `rgba(${darkBgRgb}, 0.95)`;
 
         styleTag.innerHTML = `
             :root {
@@ -119,10 +119,38 @@
                 background: rgba(${secondaryRgb}, 0.35) !important;
             }
 
-            /* Tarjetas de Producto y Paneles */
+            /* Tarjetas de Producto, Filtros, Paneles y Navbar en Modo Oscuro (Eliminar completamente el azul por defecto) */
+            body.modo-oscuro .product-card-premium,
+            body.modo-oscuro .filter-card-modern,
+            body.modo-oscuro .control-bar-modern,
+            body.modo-oscuro .nav-pill-indicator,
+            body.modo-oscuro .article-card,
+            body.modo-oscuro .card,
+            body.modo-oscuro .modal-content,
+            body.modo-oscuro .offcanvas,
+            body.modo-oscuro .dropdown-menu,
+            body.modo-oscuro .glass-navbar,
+            body.modo-oscuro #mainNavbar,
+            body.modo-oscuro .accordion-item,
+            body.modo-oscuro .accordion-body,
+            .filter-card-modern,
+            .control-bar-modern,
+            .product-card-premium,
+            .nav-pill-indicator,
             .card, .modal-content, .offcanvas, .dropdown-menu {
                 background-color: ${cardBg} !important;
+                background: ${cardBg} !important;
                 border-color: rgba(${primaryRgb}, 0.25) !important;
+                color: ${textColor} !important;
+            }
+
+            body.modo-oscuro .product-card-premium .product-img-wrapper,
+            body.modo-oscuro .control-bar-modern .input-group,
+            body.modo-oscuro .control-bar-modern input,
+            body.modo-oscuro .control-bar-modern select {
+                background-color: rgba(${darkBgRgb}, 0.6) !important;
+                background: rgba(${darkBgRgb}, 0.6) !important;
+                border-color: rgba(${primaryRgb}, 0.2) !important;
                 color: ${textColor} !important;
             }
 
