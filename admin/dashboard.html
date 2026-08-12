@@ -821,38 +821,119 @@
                             <small class="text-muted">Sugerido: Imagen cuadrada 512x512px.</small>
                         </div>
 
+                        <!-- Vista Previa Interactiva en Tiempo Real del Tema -->
+                        <div class="col-md-12 mb-4">
+                            <div class="card border rounded-4 p-4 shadow-sm text-dark bg-white">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h6 class="fw-bold m-0 text-primary d-flex align-items-center gap-2">
+                                        <i class="bi bi-eye-fill"></i> Vista Previa en Tiempo Real (Todas las Páginas: Nav, Hero, Catálogo y Footer)
+                                    </h6>
+                                    <span class="badge bg-success rounded-pill px-3 py-1"><i class="bi bi-broadcast me-1"></i>En Vivo</span>
+                                </div>
+                                <p class="small text-muted mb-3">Modifica los colores, logo o modo visual abajo y observa cómo se transformarán automáticamente todas las páginas de la tienda.</p>
+                                
+                                <div id="adminLivePreviewWindow" class="border rounded-4 overflow-hidden shadow-sm" style="transition: all 0.3s ease;">
+                                    <!-- Navbar Mock -->
+                                    <div id="prevNavbar" class="p-3 d-flex align-items-center justify-content-between border-bottom" style="transition: all 0.3s ease;">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <img id="prevLogoImg" src="img/Logo/logo_2.png" height="22" alt="Logo" />
+                                            <span id="prevBrandName" class="fw-bold fs-6">Syverluma Store</span>
+                                        </div>
+                                        <div class="d-flex align-items-center gap-3 small fw-semibold">
+                                            <span id="prevLink1"><i class="bi bi-house me-1"></i>Inicio</span>
+                                            <span>Nosotros</span>
+                                            <span>Servicios</span>
+                                            <span>Contáctanos</span>
+                                        </div>
+                                        <div>
+                                            <span id="prevCartBadge" class="badge rounded-pill px-2 py-1"><i class="bi bi-cart"></i> 0</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Hero Banner Mock -->
+                                    <div id="prevHero" class="p-4 text-center border-bottom" style="transition: all 0.3s ease;">
+                                        <h5 id="prevHeroTitle" class="fw-bold mb-1 font-orbitron" style="letter-spacing: 1px;">SYVERLUMA STORE</h5>
+                                        <p id="prevHeroSub" class="small mb-3">Tu plataforma de comercio electrónico a la medida</p>
+                                        <div id="prevQuoteCard" class="p-3 mx-auto rounded-3 border text-center shadow-sm" style="max-width: 460px; transition: all 0.3s ease;">
+                                            <p class="small mb-1 fst-italic" id="prevQuoteText">"La excelencia está en los detalles"</p>
+                                            <small class="fw-bold text-primary" id="prevQuoteAuthor">— Syverluma Store</small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Catalog & Filter Mock -->
+                                    <div id="prevCatalogSection" class="p-4" style="transition: all 0.3s ease;">
+                                        <div class="text-center mb-3">
+                                            <h6 id="prevCatHeader" class="fw-bold m-0">Catálogo de Productos</h6>
+                                        </div>
+                                        <div class="row g-3">
+                                            <div class="col-4">
+                                                <div id="prevFilterCard" class="p-3 rounded-3 border shadow-sm small" style="transition: all 0.3s ease;">
+                                                    <div class="fw-bold mb-2"><i class="bi bi-funnel"></i> Filtros</div>
+                                                    <div class="p-2 rounded mb-1 border" id="prevFilterItem1">Precio (S/)</div>
+                                                    <div class="p-2 rounded border" id="prevFilterItem2">Categorías</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="row g-2">
+                                                    <div class="col-6">
+                                                        <div id="prevProdCard1" class="p-2 rounded-3 border text-center shadow-sm" style="transition: all 0.3s ease;">
+                                                            <div id="prevProdImg" class="rounded p-2 mb-2 border"><i class="bi bi-box-seam fs-5 text-muted"></i></div>
+                                                            <div class="fw-bold small mb-1">Producto Ejemplo</div>
+                                                            <span id="prevPriceBadge" class="badge">S/ 199.00</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div id="prevProdCard2" class="p-2 rounded-3 border text-center shadow-sm" style="transition: all 0.3s ease;">
+                                                            <div id="prevProdImg2" class="rounded p-2 mb-2 border"><i class="bi bi-gift fs-5 text-muted"></i></div>
+                                                            <div class="fw-bold small mb-1">Detalle Especial</div>
+                                                            <span id="prevPriceBadge2" class="badge">S/ 89.00</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Footer Mock -->
+                                    <div id="prevFooter" class="p-3 text-center border-top small" style="transition: all 0.3s ease;">
+                                        <span id="prevFooterCopy">&copy; 2026 Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Selector de Colores Harmonizados -->
                         <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color Primario (Botones y Detalles)</label>
                             <div class="d-flex align-items-center gap-2">
-                                <input type="color" class="form-control form-control-color" id="cfgColorPrimaryPicker" value="#2563eb" onchange="document.getElementById('cfgColorPrimary').value = this.value">
-                                <input type="text" class="form-control" id="cfgColorPrimary" value="#2563eb" placeholder="#2563eb" onchange="document.getElementById('cfgColorPrimaryPicker').value = this.value">
+                                <input type="color" class="form-control form-control-color" id="cfgColorPrimaryPicker" value="#2563eb" onchange="document.getElementById('cfgColorPrimary').value = this.value; actualizarPrevisualizacionAdmin();">
+                                <input type="text" class="form-control" id="cfgColorPrimary" value="#2563eb" placeholder="#2563eb" onchange="document.getElementById('cfgColorPrimaryPicker').value = this.value; actualizarPrevisualizacionAdmin();">
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color Secundario / Acento</label>
                             <div class="d-flex align-items-center gap-2">
-                                <input type="color" class="form-control form-control-color" id="cfgColorSecondaryPicker" value="#10b981" onchange="document.getElementById('cfgColorSecondary').value = this.value">
-                                <input type="text" class="form-control" id="cfgColorSecondary" value="#10b981" placeholder="#10b981" onchange="document.getElementById('cfgColorSecondaryPicker').value = this.value">
+                                <input type="color" class="form-control form-control-color" id="cfgColorSecondaryPicker" value="#10b981" onchange="document.getElementById('cfgColorSecondary').value = this.value; actualizarPrevisualizacionAdmin();">
+                                <input type="text" class="form-control" id="cfgColorSecondary" value="#10b981" placeholder="#10b981" onchange="document.getElementById('cfgColorSecondaryPicker').value = this.value; actualizarPrevisualizacionAdmin();">
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color de Fondo Principal</label>
                             <div class="d-flex align-items-center gap-2">
-                                <input type="color" class="form-control form-control-color" id="cfgColorDarkBgPicker" value="#0f172a" onchange="document.getElementById('cfgColorDarkBg').value = this.value">
-                                <input type="text" class="form-control" id="cfgColorDarkBg" value="#0f172a" placeholder="#0f172a" onchange="document.getElementById('cfgColorDarkBgPicker').value = this.value">
+                                <input type="color" class="form-control form-control-color" id="cfgColorDarkBgPicker" value="#0f172a" onchange="document.getElementById('cfgColorDarkBg').value = this.value; actualizarPrevisualizacionAdmin();">
+                                <input type="text" class="form-control" id="cfgColorDarkBg" value="#0f172a" placeholder="#0f172a" onchange="document.getElementById('cfgColorDarkBgPicker').value = this.value; actualizarPrevisualizacionAdmin();">
                             </div>
                         </div>
                         <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color de Tarjetas y Filtros</label>
                             <div class="d-flex align-items-center gap-2">
-                                <input type="color" class="form-control form-control-color" id="cfgColorCardBgPicker" value="#1e293b" onchange="document.getElementById('cfgColorCardBg').value = this.value">
-                                <input type="text" class="form-control" id="cfgColorCardBg" value="#1e293b" placeholder="#1e293b" onchange="document.getElementById('cfgColorCardBgPicker').value = this.value">
+                                <input type="color" class="form-control form-control-color" id="cfgColorCardBgPicker" value="#1e293b" onchange="document.getElementById('cfgColorCardBg').value = this.value; actualizarPrevisualizacionAdmin();">
+                                <input type="text" class="form-control" id="cfgColorCardBg" value="#1e293b" placeholder="#1e293b" onchange="document.getElementById('cfgColorCardBgPicker').value = this.value; actualizarPrevisualizacionAdmin();">
                             </div>
                         </div>
                         <div class="col-md-12 mb-3">
                             <label class="form-label fw-semibold">Modo Visual Predeterminado</label>
-                            <select class="form-select" id="cfgModoPredeterminado">
+                            <select class="form-select" id="cfgModoPredeterminado" onchange="actualizarPrevisualizacionAdmin();">
                                 <option value="oscuro">Modo Oscuro (Dark Elegante)</option>
                                 <option value="claro">Modo Claro (Light Limpio)</option>
                             </select>
@@ -4117,12 +4198,114 @@
                 if (elEnv) elEnv.value = configuracionCache.textoEnvio || 'Realizamos envíos diarios a Lima Metropolitana (entrega de 24 a 48 horas en días hábiles) y a provincias mediante Olva Courier o agencias de transporte (2 a 4 días hábiles).';
                 const elGar = document.getElementById('cfgTextoGarantia');
                 if (elGar) elGar.value = configuracionCache.textoGarantia || 'Todos nuestros equipos e importaciones cuentan con garantía contra defectos de fábrica. Se requiere conservar el comprobante de pago y empaque original para cualquier trámite de cambio o servicio técnico.';
+                
+                actualizarPrevisualizacionAdmin();
                 if (statusEl) statusEl.innerHTML = '<small class="text-success">Configuración cargada</small>';
             } catch (e) {
                 console.error('Error cargando configuración', e);
                 if (statusEl) statusEl.innerHTML = '<small class="text-danger">Error cargando configuración</small>';
             }
         }
+
+        function actualizarPrevisualizacionAdmin() {
+            const primary = document.getElementById('cfgColorPrimary')?.value || '#2563eb';
+            const secondary = document.getElementById('cfgColorSecondary')?.value || '#10b981';
+            const modo = document.getElementById('cfgModoPredeterminado')?.value || 'oscuro';
+            const esModoClaro = (modo === 'claro');
+
+            let darkBg = document.getElementById('cfgColorDarkBg')?.value || (esModoClaro ? '#f8fafc' : '#0b0f19');
+            let cardBg = document.getElementById('cfgColorCardBg')?.value || (esModoClaro ? '#ffffff' : '#141c2e');
+            const textColor = esModoClaro ? '#0f172a' : '#f8fafc';
+            const textMuted = esModoClaro ? '#64748b' : '#94a3b8';
+
+            const nombre = document.getElementById('cfgNombreTienda')?.value || 'Syverluma Store';
+            const slogan = document.getElementById('cfgSloganTienda')?.value || 'Tu plataforma de comercio electrónico a la medida';
+            const logo = document.getElementById('cfgLogoPrincipalUrl')?.value || 'img/Logo/logo_2.png';
+            const copy = document.getElementById('cfgCopyrightText')?.value || 'Desarrollado por Corporación Syverluma S.A.C.';
+
+            // Navbar Mock
+            const prevNav = document.getElementById('prevNavbar');
+            if (prevNav) {
+                prevNav.style.backgroundColor = cardBg;
+                prevNav.style.color = textColor;
+                prevNav.style.borderColor = primary + '40';
+            }
+            const prevLogo = document.getElementById('prevLogoImg');
+            if (prevLogo) prevLogo.src = logo;
+            const prevBrand = document.getElementById('prevBrandName');
+            if (prevBrand) { prevBrand.textContent = nombre; prevBrand.style.color = primary; }
+            const prevCart = document.getElementById('prevCartBadge');
+            if (prevCart) { prevCart.style.backgroundColor = primary; prevCart.style.color = '#ffffff'; }
+
+            // Hero Mock
+            const prevHero = document.getElementById('prevHero');
+            if (prevHero) {
+                prevHero.style.background = `linear-gradient(180deg, ${primary}20 0%, ${darkBg} 100%)`;
+                prevHero.style.color = textColor;
+                prevHero.style.borderColor = primary + '30';
+            }
+            const prevTitle = document.getElementById('prevHeroTitle');
+            if (prevTitle) prevTitle.textContent = nombre.toUpperCase();
+            const prevSub = document.getElementById('prevHeroSub');
+            if (prevSub) { prevSub.textContent = slogan; prevSub.style.color = secondary; }
+
+            const prevQuote = document.getElementById('prevQuoteCard');
+            if (prevQuote) {
+                prevQuote.style.backgroundColor = cardBg;
+                prevQuote.style.color = textColor;
+                prevQuote.style.borderColor = primary + '40';
+            }
+            const prevQuoteAuthor = document.getElementById('prevQuoteAuthor');
+            if (prevQuoteAuthor) prevQuoteAuthor.style.color = primary;
+
+            // Catalog Section Mock
+            const prevCat = document.getElementById('prevCatalogSection');
+            if (prevCat) {
+                prevCat.style.backgroundColor = darkBg;
+                prevCat.style.color = textColor;
+            }
+            const prevCatHead = document.getElementById('prevCatHeader');
+            if (prevCatHead) prevCatHead.style.color = textColor;
+
+            // Filter Card Mock
+            const prevFilterCard = document.getElementById('prevFilterCard');
+            if (prevFilterCard) {
+                prevFilterCard.style.backgroundColor = cardBg;
+                prevFilterCard.style.color = textColor;
+                prevFilterCard.style.borderColor = primary + '30';
+            }
+
+            const pF1 = document.getElementById('prevFilterItem1');
+            if (pF1) { pF1.style.backgroundColor = primary + '20'; pF1.style.color = primary; pF1.style.borderColor = primary + '40'; }
+            const pF2 = document.getElementById('prevFilterItem2');
+            if (pF2) { pF2.style.backgroundColor = primary + '10'; pF2.style.color = textColor; pF2.style.borderColor = primary + '20'; }
+
+            // Product Cards Mock
+            ['prevProdCard1', 'prevProdCard2'].forEach(id => {
+                const pc = document.getElementById(id);
+                if (pc) {
+                    pc.style.backgroundColor = cardBg;
+                    pc.style.color = textColor;
+                    pc.style.borderColor = primary + '30';
+                }
+            });
+
+            ['prevPriceBadge', 'prevPriceBadge2'].forEach(id => {
+                const pb = document.getElementById(id);
+                if (pb) { pb.style.backgroundColor = primary; pb.style.color = '#ffffff'; }
+            });
+
+            // Footer Mock
+            const prevFoot = document.getElementById('prevFooter');
+            if (prevFoot) {
+                prevFoot.style.backgroundColor = darkBg;
+                prevFoot.style.color = textMuted;
+                prevFoot.style.borderColor = primary + '40';
+            }
+            const prevFootCopy = document.getElementById('prevFooterCopy');
+            if (prevFootCopy) prevFootCopy.textContent = copy;
+        }
+
         async function guardarConfiguracion() {
             const statusEl = document.getElementById('cfgStatus');
             if (statusEl) statusEl.innerHTML = '<small class="text-primary">Guardando...</small>';

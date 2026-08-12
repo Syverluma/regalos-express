@@ -15,7 +15,7 @@
         colorPrimary: '#2563eb',
         colorSecondary: '#10b981',
         colorDarkBg: '#0f172a',
-        colorCardBg: '#1e293b',
+        colorCardBg: '#141c2e',
         modoPredeterminado: 'oscuro',
         frasesBanner: 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada los 7 días de la semana',
         cotizadorHabilitado: true,
@@ -51,15 +51,27 @@
         const root = document.documentElement;
         const primary = config.colorPrimary || THEME_DEFAULTS.colorPrimary;
         const secondary = config.colorSecondary || THEME_DEFAULTS.colorSecondary;
-        const darkBg = config.colorDarkBg || THEME_DEFAULTS.colorDarkBg;
-        const cardBgCustom = config.colorCardBg || (darkBg ? darkBg : THEME_DEFAULTS.colorCardBg);
         const modo = config.modoPredeterminado || 'oscuro';
         const esModoClaro = (modo === 'claro');
 
+        // Garantizar coherencia tonal entre el fondo general y las superficies de tarjetas
+        let darkBg = config.colorDarkBg;
+        if (!darkBg || darkBg === '#000000') {
+            darkBg = esModoClaro ? '#f8fafc' : '#0b0f19';
+        }
+
+        let cardBg = config.colorCardBg;
+        if (!cardBg || (cardBg === '#ffffff' && !esModoClaro)) {
+            cardBg = esModoClaro ? '#ffffff' : '#141c2e';
+        }
+
         const primaryRgb = hexToRgb(primary);
         const secondaryRgb = hexToRgb(secondary);
-        const darkBgRgb = hexToRgb(darkBg);
-        const cardBgRgb = hexToRgb(cardBgCustom);
+        const bgRgb = hexToRgb(darkBg);
+        const cardBgRgb = hexToRgb(cardBg);
+
+        const textColor = esModoClaro ? '#0f172a' : '#f8fafc';
+        const textMutedColor = esModoClaro ? '#64748b' : '#94a3b8';
 
         root.style.setProperty('--brand-primary', primary);
         root.style.setProperty('--brand-secondary', secondary);
@@ -72,10 +84,6 @@
             document.head.appendChild(styleTag);
         }
 
-        const bgBase = esModoClaro ? '#f8fafc' : darkBg;
-        const textColor = esModoClaro ? '#0f172a' : '#ffffff';
-        const cardBg = esModoClaro ? (config.colorCardBg || '#ffffff') : cardBgCustom;
-
         styleTag.innerHTML = `
             :root {
                 --bs-primary: ${primary} !important;
@@ -85,20 +93,20 @@
                 --bg-dark-custom: ${darkBg} !important;
             }
             
-            /* 1. Fondo Universal Unificado para TODAS las Páginas y Secciones */
+            /* 1. Fondo Universal Unificado (Sin bloques blancos ni franjas de color desentonado) */
             body, body.modo-oscuro, body.modo-claro, html, section, .py-5, #seccionCatalogo, #servicios-marquee, .contact-section, .nosotros-section, .blog-section, main, .article-main {
-                background-color: ${bgBase} !important;
-                background: ${bgBase} !important;
+                background-color: ${darkBg} !important;
+                background: ${darkBg} !important;
                 color: ${textColor} !important;
             }
 
-            /* 2. Header Hero Banner Unificado */
+            /* 2. Encabezado Hero Minimalista (Sin negro duro, integrado al tema) */
             header, header.gradient-bg, header.hero-banner, .gradient-bg, .blog-hero, .post-hero {
-                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.25) 0%, ${bgBase} 100%) !important;
-                border-bottom: 2px solid ${primary} !important;
+                background: linear-gradient(180deg, rgba(${primaryRgb}, 0.12) 0%, ${darkBg} 100%) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.15) !important;
             }
 
-            /* 3. Tarjetas, Paneles, Filtros, Formulario de Contacto y Acordeones (Eliminar blanco y negro desentonado) */
+            /* 3. Tarjetas, Paneles, Filtros, Formulario de Contacto (Derivados de cardBg) */
             .card,
             .filter-card-modern,
             .control-bar-modern,
@@ -116,27 +124,27 @@
             .live-search-dropdown {
                 background-color: ${cardBg} !important;
                 background: ${cardBg} !important;
-                border: 1px solid rgba(${primaryRgb}, 0.22) !important;
+                border: 1px solid rgba(${primaryRgb}, 0.18) !important;
                 color: ${textColor} !important;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
             }
 
-            /* Botones del Acordeón de Filtros (Eliminar Gris/Negro Desentonado) */
+            /* Acordeones de Filtros */
             .accordion-button,
             .filter-card-modern .accordion-button {
                 background-color: ${cardBg} !important;
                 color: ${textColor} !important;
-                border-bottom: 1px solid rgba(${primaryRgb}, 0.15) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.12) !important;
             }
 
             .accordion-button:not(.collapsed),
             .filter-card-modern .accordion-button:not(.collapsed) {
-                background-color: rgba(${primaryRgb}, 0.15) !important;
+                background-color: rgba(${primaryRgb}, 0.12) !important;
                 color: ${primary} !important;
                 box-shadow: none !important;
             }
 
-            /* 4. Buscador, Inputs, Textareas, Selects y Controles de Formulario */
+            /* 4. Buscador, Inputs, Selects */
             .form-control,
             .form-select,
             .input-group,
@@ -145,30 +153,33 @@
             .product-card-premium .product-img-wrapper,
             #buscarProductoInput,
             #ordenarSelect {
-                background-color: rgba(${primaryRgb}, 0.08) !important;
-                background: rgba(${primaryRgb}, 0.08) !important;
-                border-color: rgba(${primaryRgb}, 0.3) !important;
+                background-color: rgba(${primaryRgb}, 0.06) !important;
+                background: rgba(${primaryRgb}, 0.06) !important;
+                border-color: rgba(${primaryRgb}, 0.25) !important;
                 color: ${textColor} !important;
             }
 
             .form-control:focus, .form-select:focus {
-                background-color: rgba(${primaryRgb}, 0.12) !important;
+                background-color: rgba(${primaryRgb}, 0.1) !important;
                 border-color: ${primary} !important;
                 color: ${textColor} !important;
-                box-shadow: 0 0 10px rgba(${primaryRgb}, 0.3) !important;
+                box-shadow: 0 0 10px rgba(${primaryRgb}, 0.25) !important;
             }
 
-            /* 5. Títulos principales y subtítulos armonizados */
+            /* 5. Títulos y Textos Armoniosos */
             h1, h2, h3, h4, h5, h6, .display-4, .display-6, .section-title, .lead, .text-dark {
                 color: ${textColor} !important;
             }
-            .text-muted, .text-info {
+            .text-muted {
+                color: ${textMutedColor} !important;
+            }
+            .text-info {
                 color: ${secondary} !important;
             }
 
             .logo-edark, .store-name-display {
                 color: ${primary} !important;
-                text-shadow: 0 0 20px rgba(${primaryRgb}, 0.5) !important;
+                text-shadow: 0 0 15px rgba(${primaryRgb}, 0.3) !important;
             }
             .sub-edark, .store-slogan-display {
                 color: ${secondary} !important;
@@ -176,17 +187,17 @@
 
             /* Halos de luz ambient */
             header .rounded-circle:nth-child(1) {
-                background: rgba(${primaryRgb}, 0.35) !important;
+                background: rgba(${primaryRgb}, 0.25) !important;
             }
             header .rounded-circle:nth-child(2) {
-                background: rgba(${secondaryRgb}, 0.35) !important;
+                background: rgba(${secondaryRgb}, 0.25) !important;
             }
 
-            /* 6. Navbar Flotante Glass - Garantizar Capa Superior Interactivas */
+            /* 6. Navbar Glass Flotante (Capa Superior 99999) */
             .glass-navbar, #mainNavbar, #navbar {
-                background-color: rgba(${cardBgRgb}, 0.92) !important;
-                backdrop-filter: blur(12px) !important;
-                border-bottom: 1px solid rgba(${primaryRgb}, 0.25) !important;
+                background-color: rgba(${cardBgRgb}, 0.94) !important;
+                backdrop-filter: blur(16px) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.2) !important;
                 color: ${textColor} !important;
                 z-index: 99999 !important;
                 pointer-events: auto !important;
@@ -204,11 +215,11 @@
                 cursor: pointer !important;
             }
 
-            /* 7. Footer Estilizado Armonioso (Eliminar Negro Rígido) */
+            /* 7. Footer Armonizado */
             footer, footer.bg-dark, .py-5.bg-dark, #footer-container {
-                background-color: ${bgBase} !important;
-                background: ${bgBase} !important;
-                border-top: 2px solid ${primary} !important;
+                background-color: ${darkBg} !important;
+                background: ${darkBg} !important;
+                border-top: 1px solid rgba(${primaryRgb}, 0.2) !important;
                 color: ${textColor} !important;
             }
 
@@ -226,8 +237,8 @@
             }
             .btn-primary:hover, .btn-primary:focus {
                 background-color: ${primary} !important;
-                filter: brightness(1.15);
-                box-shadow: 0 0 15px rgba(${primaryRgb}, 0.5) !important;
+                filter: brightness(1.12);
+                box-shadow: 0 0 12px rgba(${primaryRgb}, 0.4) !important;
             }
             .btn-outline-primary { 
                 color: ${primary} !important; 
@@ -257,14 +268,13 @@
                 color: #ffffff !important;
             }
             .btn-success:hover {
-                filter: brightness(1.15);
-                box-shadow: 0 0 15px rgba(${secondaryRgb}, 0.5) !important;
+                filter: brightness(1.12);
+                box-shadow: 0 0 12px rgba(${secondaryRgb}, 0.4) !important;
             }
             .badge.bg-success { 
                 background-color: ${secondary} !important; 
             }
 
-            /* Sobrescribir enlaces y hover en navbar */
             #mainNavbar a.nav-link:hover,
             #mainNavbar a.nav-link.active,
             .glass-navbar a.nav-link:hover,
@@ -506,9 +516,21 @@
         }
     }
 
-    // Método principal para cargar configuración de Firestore e inicializar el tema
+    // Método principal para cargar configuración de Firestore e inicializar el tema (con Caché Inmediato Local)
     async function inicializarTemaDinamico() {
         let config = null;
+
+        // 1. Intentar leer del Caché Local Inmediato (0ms para evitar FOUC y estilos antiguos al recargar)
+        try {
+            const cachedStr = localStorage.getItem('syverluma_theme_config');
+            if (cachedStr) {
+                config = JSON.parse(cachedStr);
+                aplicarEstilosTema(config);
+                aplicarBrandingElementos(config);
+            }
+        } catch (e) {}
+
+        // 2. Consultar Firestore para obtener la configuración más reciente
         if (window.configGeneral) {
             config = window.configGeneral;
         } else if (typeof firebase !== 'undefined' && firebase.firestore) {
@@ -517,6 +539,9 @@
                 if (snap.exists) {
                     config = snap.data();
                     window.configGeneral = config;
+                    try {
+                        localStorage.setItem('syverluma_theme_config', JSON.stringify(config));
+                    } catch(e) {}
                 }
             } catch (e) {
                 console.warn('[Tema] No se pudo obtener la configuración de Firestore:', e);
@@ -533,7 +558,7 @@
         aplicarBrandingElementos(mergedConfig);
     }
 
-    // Auto-inicializar cuando el DOM esté listo
+    // Auto-inicializar cuando el DOM esté listo o inmediatamente si ya cargó
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', inicializarTemaDinamico);
     } else {
