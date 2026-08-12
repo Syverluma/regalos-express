@@ -193,7 +193,7 @@
                 background: rgba(${secondaryRgb}, 0.25) !important;
             }
 
-            /* 6. Navbar Glass Flotante (Limpio y Compatible con Bootstrap) */
+            /* 6. Navbar Liquid Glass Flotante Ancho Elegante */
             #navbar {
                 position: relative;
                 z-index: 1050;
@@ -201,16 +201,19 @@
 
             .glass-navbar, #mainNavbar {
                 position: fixed !important;
-                top: 12px !important;
-                left: 16px !important;
-                right: 16px !important;
+                top: 10px !important;
+                left: 12px !important;
+                right: 12px !important;
                 margin-left: auto !important;
                 margin-right: auto !important;
                 width: auto !important;
-                max-width: 1400px !important;
-                background-color: rgba(${cardBgRgb}, 0.94) !important;
-                backdrop-filter: blur(16px) !important;
-                border-bottom: 1px solid rgba(${primaryRgb}, 0.2) !important;
+                max-width: 98% !important;
+                background-color: rgba(${cardBgRgb}, 0.58) !important;
+                backdrop-filter: blur(20px) saturate(190%) !important;
+                -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+                border: 1px solid rgba(255, 255, 255, 0.22) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.3) !important;
+                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
                 color: ${textColor} !important;
                 z-index: 1050 !important;
                 pointer-events: auto !important;
@@ -533,6 +536,22 @@
         const copyEl = document.querySelector('.footer-copyright');
         if (copyEl && c.copyrightText) {
             copyEl.innerHTML = `&copy; ${new Date().getFullYear()} ${c.copyrightText}`;
+        }
+
+        // 11. Buscador Placeholder y Tipo de Cambio Habilitado
+        const searchInput = document.getElementById('navLiveSearchInput');
+        if (searchInput) {
+            const defaultPlaceholder = `Buscar en ${c.nombreTienda || 'la tienda'}...`;
+            searchInput.placeholder = c.buscadorPlaceholder || defaultPlaceholder;
+        }
+
+        const tcPill = document.querySelector('.nav-pill-indicator');
+        if (tcPill) {
+            if (c.tipoCambioHabilitado === false) {
+                tcPill.style.setProperty('display', 'none', 'important');
+            } else {
+                tcPill.style.display = '';
+            }
         }
     }
 

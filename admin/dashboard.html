@@ -931,12 +931,23 @@
                                 <input type="text" class="form-control" id="cfgColorCardBg" value="#1e293b" placeholder="#1e293b" onchange="document.getElementById('cfgColorCardBgPicker').value = this.value; actualizarPrevisualizacionAdmin();">
                             </div>
                         </div>
-                        <div class="col-md-12 mb-3">
+                        <div class="col-md-6 mb-3">
                             <label class="form-label fw-semibold">Modo Visual Predeterminado</label>
                             <select class="form-select" id="cfgModoPredeterminado" onchange="actualizarPrevisualizacionAdmin();">
                                 <option value="oscuro">Modo Oscuro (Dark Elegante)</option>
                                 <option value="claro">Modo Claro (Light Limpio)</option>
                             </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Texto Placeholder del Buscador (Navbar)</label>
+                            <input type="text" class="form-control" id="cfgBuscadorPlaceholder" placeholder="Ej: Buscar en Melany Store..." oninput="actualizarPrevisualizacionAdmin();" />
+                            <small class="text-muted">Si se deja vacío, dirá "Buscar en [Nombre de tu Tienda]..."</small>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-check form-switch fs-6">
+                                <input class="form-check-input" type="checkbox" id="cfgTipoCambioHabilitado" checked onchange="actualizarPrevisualizacionAdmin();">
+                                <label class="form-check-label fw-semibold" for="cfgTipoCambioHabilitado">Mostrar Indicador de Tipo de Cambio (TC) en la barra de navegación</label>
+                            </div>
                         </div>
 
                         <!-- Frases del Banner -->
@@ -4151,6 +4162,11 @@
                 const elCopy = document.getElementById('cfgCopyrightText');
                 if (elCopy) elCopy.value = configuracionCache.copyrightText || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.';
 
+                const elTcHab = document.getElementById('cfgTipoCambioHabilitado');
+                if (elTcHab) elTcHab.checked = configuracionCache.tipoCambioHabilitado !== false;
+                const elBusPl = document.getElementById('cfgBuscadorPlaceholder');
+                if (elBusPl) elBusPl.value = configuracionCache.buscadorPlaceholder || '';
+
                 const elOgTit = document.getElementById('cfgOgTitle');
                 if (elOgTit) elOgTit.value = configuracionCache.ogTitle || '';
                 const elOgDesc = document.getElementById('cfgOgDescription');
@@ -4334,6 +4350,8 @@
                 instagramUrl: (document.getElementById('cfgInstagramUrl')?.value || '').trim(),
                 tiktokUrl: (document.getElementById('cfgTiktokUrl')?.value || '').trim(),
                 copyrightText: (document.getElementById('cfgCopyrightText')?.value || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.').trim(),
+                tipoCambioHabilitado: document.getElementById('cfgTipoCambioHabilitado') ? document.getElementById('cfgTipoCambioHabilitado').checked : true,
+                buscadorPlaceholder: (document.getElementById('cfgBuscadorPlaceholder')?.value || '').trim(),
                 ogTitle: (document.getElementById('cfgOgTitle')?.value || '').trim(),
                 ogDescription: (document.getElementById('cfgOgDescription')?.value || '').trim(),
                 ogImage: (document.getElementById('cfgOgImage')?.value || '').trim(),

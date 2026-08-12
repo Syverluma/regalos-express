@@ -1601,17 +1601,21 @@ body::before {
 .glass-navbar,
 #mainNavbar {
     position: fixed !important;
-    top: 12px !important;
-    left: 16px !important;
-    right: 16px !important;
+    top: 10px !important;
+    left: 12px !important;
+    right: 12px !important;
     margin-left: auto !important;
     margin-right: auto !important;
     width: auto !important;
-    max-width: 1400px !important;
+    max-width: 98% !important;
     border-radius: 50px !important;
     z-index: 1050 !important;
-    padding: 0.45rem 1.4rem !important;
-    background: transparent !important;
+    padding: 0.45rem 1.6rem !important;
+    background-color: rgba(255, 255, 255, 0.45) !important;
+    backdrop-filter: blur(20px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
+    border: 1px solid rgba(255, 255, 255, 0.35) !important;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     pointer-events: auto !important;
 }
 
