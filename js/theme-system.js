@@ -569,6 +569,19 @@
                 tcPill.style.display = '';
             }
         }
+
+        // 12. Asistente Virtual IA Global White-Label
+        const storeTitleName = c.nombreTienda || 'Syverluma Store';
+        const storeLogoAvatar = c.logoIsotipoUrl || c.logoPrincipalUrl || 'img/Logo/isotipo_Negro.png';
+
+        document.querySelectorAll('#chatbotAvatarImg, #chatbotHeaderImg').forEach(img => {
+            if (img && storeLogoAvatar) img.src = storeLogoAvatar;
+        });
+
+        const chatTitleEl = document.getElementById('chatbotHeaderTitle');
+        if (chatTitleEl) {
+            chatTitleEl.textContent = `${storeTitleName} IA`;
+        }
     }
 
     // Método principal para cargar configuración de Firestore e inicializar el tema (con Caché Inmediato Local)

@@ -2548,125 +2548,93 @@ function inicializarBusquedaPredictiva() {
 // ASISTENTE VIRTUAL CHIMUELO IA (CHATBOT UNIFICADO)
 // =========================================================
 function inicializarChimueloIA() {
-    // 1. Verificar si estamos en la página de mis-pedidos con el widget especializado #ai-chimuelo-toggle
-    const toggleWidget = document.getElementById('ai-chimuelo-toggle');
-    const panelWidget = document.getElementById('ai-chimuelo-panel');
-    const closeWidget = document.getElementById('ai-chimuelo-close');
-    const formWidget = document.getElementById('ai-chimuelo-form');
-    const inputWidget = document.getElementById('ai-chimuelo-input');
-    const messagesWidget = document.getElementById('ai-chimuelo-messages');
+    let container = document.getElementById('globalChatbotContainer');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'globalChatbotContainer';
+        container.className = 'position-fixed bottom-0 end-0 m-3 m-md-4';
+        container.style.zIndex = '2147483640';
+        
+        const logoUrl = (window.configGeneral && (window.configGeneral.logoIsotipoUrl || window.configGeneral.logoPrincipalUrl)) ? (window.configGeneral.logoIsotipoUrl || window.configGeneral.logoPrincipalUrl) : 'img/Logo/isotipo_Negro.png';
+        const storeTitle = (window.configGeneral && window.configGeneral.nombreTienda) ? window.configGeneral.nombreTienda : 'Syverluma Store';
 
-    if (toggleWidget && panelWidget) {
-        if (!toggleWidget.dataset.bound) {
-            toggleWidget.dataset.bound = 'true';
-            toggleWidget.addEventListener('click', () => {
-                panelWidget.classList.toggle('d-none');
-                if (!panelWidget.classList.contains('d-none')) {
-                    if (messagesWidget && messagesWidget.children.length === 0) {
-                        mostrarBienvenidaChimuelo(messagesWidget, false);
-                    }
-                    if (inputWidget) setTimeout(() => inputWidget.focus(), 200);
-                }
-            });
-        }
-        if (closeWidget && !closeWidget.dataset.bound) {
-            closeWidget.dataset.bound = 'true';
-            closeWidget.addEventListener('click', () => panelWidget.classList.add('d-none'));
-        }
-        if (formWidget && !formWidget.dataset.bound) {
-            formWidget.dataset.bound = 'true';
-            formWidget.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (inputWidget && inputWidget.value.trim()) {
-                    procesarConsultaChimuelo(inputWidget.value.trim(), messagesWidget, inputWidget);
-                }
-            });
-        }
-    }
-
-    // 2. Verificar o inyectar widget flotante general #chatbotBtn / #chatbotModal en el resto del sitio
-    let btn = document.getElementById('chatbotBtn');
-    let modalEl = document.getElementById('chatbotModal');
-
-    if (!btn && !modalEl && !toggleWidget) {
-        const divContainer = document.createElement('div');
-        divContainer.innerHTML = `
-            <button id="chatbotBtn" style="position:fixed;bottom:30px;right:30px;z-index:1050;"
-                class="btn btn-primary rounded-circle shadow-lg p-0 transition-all" aria-label="Abrir chat virtual Chimuelo IA" title="Asistente virtual Chimuelo IA">
-                <img src="img/Logo/isotipo_Negro.png" alt="Icono de Chimuelo IA" style="width: 50px; height: auto;">
+        container.innerHTML = `
+            <button id="chatbotToggleBtn" class="btn btn-primary rounded-circle shadow-lg p-0 d-flex align-items-center justify-content-center position-relative transition-all" style="width: 58px; height: 58px; border: 2px solid rgba(255,255,255,0.4);" title="Asistente Virtual" aria-label="Abrir asistente virtual">
+                <img id="chatbotAvatarImg" src="${logoUrl}" width="34" height="34" class="rounded-circle object-fit-contain" alt="Asistente IA" />
+                <span class="position-absolute top-0 start-100 translate-middle p-1 bg-success border border-light rounded-circle">
+                    <span class="visually-hidden">En línea</span>
+                </span>
             </button>
-            <div class="modal fade" id="chatbotModal" tabindex="-1" aria-labelledby="chatbotModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-bottom modal-sm" style="position:fixed;bottom:0;right:30px;max-width:360px;margin:0;z-index:1060;">
-                    <div class="modal-content shadow-lg border-0 rounded-4 overflow-hidden" style="background: rgba(255, 255, 255, 0.95); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);">
-                        <div class="modal-header py-2.5 bg-primary text-white border-0">
-                            <div class="d-flex align-items-center gap-2">
-                                <div class="bg-white rounded-circle p-1 d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px;">
-                                    <img src="img/Logo/isotipo_Negro.png" alt="Chimuelo" style="width: 24px; height: 24px;">
-                                </div>
-                                <div>
-                                    <h6 class="modal-title mb-0 fw-bold" id="chatbotModalLabel" style="font-size: 0.95rem;">Chimuelo IA</h6>
-                                    <small class="text-light opacity-75" style="font-size: 0.72rem;">Asistente eDark Import</small>
-                                </div>
-                            </div>
-                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                        </div>
-                        <div class="modal-body p-3" id="chatbotMessages" style="max-height:360px;min-height:280px;overflow-y:auto;font-size:0.93em;display:flex;flex-direction:column;gap:10px;">
-                        </div>
-                        <div class="modal-footer py-2 bg-light border-top">
-                            <div class="input-group input-group-sm">
-                                <input type="text" id="chatbotInput" class="form-control rounded-pill ps-3 shadow-none" placeholder="Pregunta sobre productos, pedidos..." autocomplete="off">
-                                <button id="chatbotSend" class="btn btn-primary rounded-circle ms-1 px-2.5"><i class="bi bi-send-fill"></i></button>
-                            </div>
+
+            <div id="chatbotFloatingPanel" class="card shadow-lg border-0 d-none" style="width: 360px; max-width: calc(100vw - 32px); height: 480px; max-height: 80vh; position: absolute; bottom: 72px; right: 0; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.3s ease; z-index: 2147483645;">
+                <div id="chatbotHeader" class="p-3 bg-primary text-white d-flex align-items-center justify-content-between">
+                    <div class="d-flex align-items-center gap-2">
+                        <img id="chatbotHeaderImg" src="${logoUrl}" width="28" height="28" class="rounded-circle bg-white p-1" alt="IA Logo" />
+                        <div>
+                            <h6 class="fw-bold m-0 text-white fs-6" id="chatbotHeaderTitle">${storeTitle} IA</h6>
+                            <small class="text-white opacity-75" style="font-size: 0.75rem;"><i class="bi bi-circle-fill text-success me-1" style="font-size: 0.45rem;"></i>En línea 24/7</small>
                         </div>
                     </div>
+                    <button type="button" class="btn-close btn-close-white shadow-none" id="chatbotCloseBtn" aria-label="Cerrar"></button>
                 </div>
-            </div>`;
-        document.body.appendChild(divContainer);
-        btn = document.getElementById('chatbotBtn');
-        modalEl = document.getElementById('chatbotModal');
+
+                <div id="chatbotMessages" class="card-body p-3 overflow-auto flex-grow-1 d-flex flex-column gap-2" style="font-size: 0.88rem;">
+                </div>
+
+                <div id="chatbotFooter" class="p-2 border-top">
+                    <form id="chatbotForm" class="d-flex gap-2">
+                        <input type="text" id="chatbotInput" class="form-control rounded-pill px-3 py-2 text-sm shadow-none" placeholder="Escribe tu consulta..." autocomplete="off" />
+                        <button type="submit" class="btn btn-primary rounded-circle d-flex align-items-center justify-content-center p-0 flex-shrink-0" style="width: 38px; height: 38px;">
+                            <i class="bi bi-send-fill fs-6"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(container);
     }
 
-    if (btn && modalEl) {
-        if (!btn.dataset.bound) {
-            btn.dataset.bound = 'true';
-            btn.addEventListener('click', function () {
-                const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-                modal.show();
-                const msgCont = document.getElementById('chatbotMessages');
-                if (msgCont && msgCont.children.length === 0) {
-                    mostrarBienvenidaChimuelo(msgCont, true);
-                }
-                setTimeout(() => {
-                    const input = document.getElementById('chatbotInput');
-                    if (input) input.focus();
-                }, 300);
-            });
-        }
+    const toggleBtn = document.getElementById('chatbotToggleBtn');
+    const panel = document.getElementById('chatbotFloatingPanel');
+    const closeBtn = document.getElementById('chatbotCloseBtn');
+    const form = document.getElementById('chatbotForm');
+    const input = document.getElementById('chatbotInput');
+    const messages = document.getElementById('chatbotMessages');
 
-        const inputEl = document.getElementById('chatbotInput');
-        const sendBtn = document.getElementById('chatbotSend');
-        const msgCont = document.getElementById('chatbotMessages');
-
-        if (sendBtn && !sendBtn.dataset.bound) {
-            sendBtn.dataset.bound = 'true';
-            sendBtn.addEventListener('click', () => {
-                if (inputEl && inputEl.value.trim()) {
-                    procesarConsultaChimuelo(inputEl.value.trim(), msgCont, inputEl);
-                }
-            });
-        }
-        if (inputEl && !inputEl.dataset.bound) {
-            inputEl.dataset.bound = 'true';
-            inputEl.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (inputEl.value.trim()) {
-                        procesarConsultaChimuelo(inputEl.value.trim(), msgCont, inputEl);
+    if (toggleBtn && panel) {
+        if (!toggleBtn.dataset.bound) {
+            toggleBtn.dataset.bound = 'true';
+            toggleBtn.addEventListener('click', () => {
+                panel.classList.toggle('d-none');
+                if (!panel.classList.contains('d-none')) {
+                    if (messages && messages.children.length === 0) {
+                        mostrarBienvenidaChimuelo(messages, false);
                     }
+                    if (input) setTimeout(() => input.focus(), 150);
                 }
             });
         }
     }
+
+    if (closeBtn && panel && !closeBtn.dataset.bound) {
+        closeBtn.dataset.bound = 'true';
+        closeBtn.addEventListener('click', () => panel.classList.add('d-none'));
+    }
+
+    if (form && !form.dataset.bound) {
+        form.dataset.bound = 'true';
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (input && input.value.trim()) {
+                procesarConsultaChimuelo(input.value.trim(), messages, input);
+            }
+        });
+    }
+
+    if (window.configGeneral && typeof aplicarBrandingElementos === 'function') {
+        aplicarBrandingElementos(window.configGeneral);
+    }
+}
 
     // Función de bienvenida estandarizada para ambos widgets
     function mostrarBienvenidaChimuelo(contenedor, incluyeChips) {
