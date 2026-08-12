@@ -272,8 +272,13 @@
         if (c.frasesBanner) {
             const lineas = c.frasesBanner.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             if (lineas.length > 0) {
-                window.frases = lineas.map(txt => ({ texto: txt, autor: c.nombreTienda }));
-                if (window.mostrarFrase) window.mostrarFrase(0);
+                const list = lineas.map(txt => ({ texto: txt, autor: c.nombreTienda }));
+                window.frases = list;
+                if (typeof window.actualizarFrasesBanner === 'function') {
+                    window.actualizarFrasesBanner(list);
+                } else if (typeof window.mostrarFrase === 'function') {
+                    window.mostrarFrase(0);
+                }
             }
         }
 

@@ -456,56 +456,54 @@
   <script src="js/theme-system.js?v=20260812"></script>
   <script src="js/scripts.js?v=20260716"></script>
   <script>
-    // Frases célebres para el carrusel
-    const frases = [
-      { texto: "La ciencia no es sino una perversión de sí misma a menos que tenga como objetivo final el mejoramiento de la humanidad.", autor: "Nikola Tesla" },
-      { texto: "Cualquier cosa que pueda ser conectada, será conectada.", autor: "Kevin Ashton (Internet de las cosas)" },
-      { texto: "La tecnología es solo una herramienta. En términos de motivar a los niños y de conseguir que trabajen juntos, el profesor es lo más importante.", autor: "Bill Gates" },
-      { texto: "La mejor manera de predecir el futuro es inventarlo.", autor: "Alan Kay" },
-      { texto: "No me asusta que las computadoras lleguen a pensar como los humanos. Me asusta que los humanos piensen como computadoras.", autor: "Sydney J. Harris" },
-      { texto: "La innovación distingue a un líder de un seguidor.", autor: "Steve Jobs" },
-      { texto: "El software es como el sexo: es mejor cuando es libre.", autor: "Linus Torvalds" },
-      { texto: "La web es más una invención social que técnica. La diseñé para que la gente pudiera colaborar y compartir conocimiento.", autor: "Tim Berners-Lee" },
-      { texto: "El mayor riesgo es no asumir ningún riesgo. En un mundo que cambia realmente rápido, la única estrategia que está garantizada a fallar es no asumir riesgos.", autor: "Mark Zuckerberg" },
-      { texto: "La ciencia de hoy es la tecnología del mañana.", autor: "Edward Teller" },
-      { texto: "La tecnología es mejor cuando une a las personas.", autor: "Matt Mullenweg" },
-      { texto: "No es la fe en la tecnología. Es la fe en las personas.", autor: "Steve Jobs" },
-      { texto: "La tecnología mueve el mundo.", autor: "Steve Jobs" },
-      { texto: "La tecnología es solo tan buena como la gente que la usa.", autor: "Anónimo" },
-      { texto: "La tecnología es una palabra que describe algo que aún no funciona.", autor: "Douglas Adams" },
-      { texto: "La imaginación es más importante que el conocimiento.", autor: "Albert Einstein" },
-      { texto: "La tecnología es el arte de organizar el mundo para que no tengamos que experimentarlo.", autor: "Max Frisch" },
-      { texto: "El avance de la tecnología es basado en hacerla encajar para que no la notes, para que forme parte de la vida cotidiana.", autor: "Bill Gates" },
-      { texto: "El mayor enemigo del conocimiento no es la ignorancia, es la ilusión del conocimiento.", autor: "Stephen Hawking" },
-      { texto: "Nunca confíes en un ordenador que no puedas lanzar por una ventana.", autor: "Steve Wozniak" },
-      { texto: "El propósito de la computación es la percepción, la comprensión y la acción.", autor: "Marvin Minsky" },
-      { texto: "La tecnología debería mejorar tu vida, no convertirse en tu vida.", autor: "Harvey B. Mackay" },
-      { texto: "El hardware es lo que hace a una máquina rápida; el software es lo que hace que una máquina lenta.", autor: "Craig Bruce" },
-      { texto: "La tecnología es cualquier cosa que no estaba cuando naciste.", autor: "Alan Kay" },
-      { texto: "El verdadero progreso es el que pone la tecnología al alcance de todos.", autor: "Henry Ford" },
-      { texto: "La informática no trata sobre computadoras más que la astronomía sobre telescopios.", autor: "Edsger Dijkstra" }
+    // Frases para el carrusel de banner (Soporte dinámico por marca)
+    window.frases = [
+      { texto: "La excelencia está en los detalles.", autor: "Syverluma Store" },
+      { texto: "Envíos rápidos y seguros a todo el país.", autor: "Syverluma Store" },
+      { texto: "Atención personalizada los 7 días de la semana.", autor: "Syverluma Store" }
     ];
     let fraseActual = 0;
     const fraseTexto = () => document.querySelector('.frase-carrusel-texto');
     const fraseAutor = () => document.querySelector('.frase-carrusel-autor');
+
+    window.actualizarFrasesBanner = function(nuevasFrases) {
+      if (Array.isArray(nuevasFrases) && nuevasFrases.length > 0) {
+        window.frases = nuevasFrases;
+        fraseActual = 0;
+        mostrarFrase(0);
+      }
+    };
+
     function mostrarFrase(idx) {
-      fraseTexto().style.opacity = 0;
-      fraseAutor().style.opacity = 0;
+      const fTxt = fraseTexto();
+      const fAut = fraseAutor();
+      if (!fTxt || !fAut || !window.frases || window.frases.length === 0) return;
+      
+      const item = window.frases[idx % window.frases.length];
+      if (!item) return;
+
+      fTxt.style.opacity = 0;
+      fAut.style.opacity = 0;
       setTimeout(() => {
-        fraseTexto().textContent = '"' + frases[idx].texto + '"';
-        fraseAutor().textContent = '— ' + frases[idx].autor;
-        fraseTexto().style.opacity = 1;
-        fraseAutor().style.opacity = 1;
+        fTxt.textContent = '"' + item.texto + '"';
+        fAut.textContent = '— ' + (item.autor || window.configGeneral?.nombreTienda || 'Tienda');
+        fTxt.style.opacity = 1;
+        fAut.style.opacity = 1;
       }, 300);
     }
+
     function siguienteFrase() {
-      fraseActual = (fraseActual + 1) % frases.length;
+      if (!window.frases || window.frases.length === 0) return;
+      fraseActual = (fraseActual + 1) % window.frases.length;
       mostrarFrase(fraseActual);
     }
+
     function anteriorFrase() {
-      fraseActual = (fraseActual - 1 + frases.length) % frases.length;
+      if (!window.frases || window.frases.length === 0) return;
+      fraseActual = (fraseActual - 1 + window.frases.length) % window.frases.length;
       mostrarFrase(fraseActual);
     }
+
     document.addEventListener('DOMContentLoaded', function () {
       mostrarFrase(fraseActual);
       // Auto-carrusel
