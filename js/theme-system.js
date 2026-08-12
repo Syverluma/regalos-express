@@ -15,6 +15,8 @@
         colorPrimary: '#2563eb',
         colorSecondary: '#10b981',
         colorDarkBg: '#0f172a',
+        modoPredeterminado: 'oscuro', // 'oscuro' o 'claro'
+        frasesBanner: 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada y garantía asegurada',
         cotizadorHabilitado: true,
         cotizadorTitulo: 'Cotizador Personalizado',
         cotizadorSubtitulo: 'Arma tu pedido ideal a la medida',
@@ -40,6 +42,9 @@
         const primary = config.colorPrimary || THEME_DEFAULTS.colorPrimary;
         const secondary = config.colorSecondary || THEME_DEFAULTS.colorSecondary;
         const darkBg = config.colorDarkBg || THEME_DEFAULTS.colorDarkBg;
+        const modo = config.modoPredeterminado || 'oscuro';
+        const esModoClaro = (modo === 'claro');
+
         const primaryRgb = hexToRgb(primary);
         const secondaryRgb = hexToRgb(secondary);
         const darkBgRgb = hexToRgb(darkBg);
@@ -55,6 +60,11 @@
             document.head.appendChild(styleTag);
         }
 
+        const bgBase = esModoClaro ? '#f8fafc' : darkBg;
+        const bgBaseRgb = esModoClaro ? '248, 250, 252' : darkBgRgb;
+        const textColor = esModoClaro ? '#0f172a' : '#ffffff';
+        const cardBg = esModoClaro ? '#ffffff' : `rgba(${darkBgRgb}, 0.92)`;
+
         styleTag.innerHTML = `
             :root {
                 --bs-primary: ${primary} !important;
@@ -64,31 +74,32 @@
                 --bg-dark-custom: ${darkBg} !important;
             }
             
-            /* Fondo Universal de la Tienda */
-            body, body.modo-oscuro, html, html.modo-oscuro {
-                background-color: ${darkBg} !important;
-                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.22) 0%, ${darkBg} 75%) !important;
-                color: #f8fafc !important;
+            /* Fondo Universal de la Tienda (Soporte Modo Claro y Modo Oscuro) */
+            body, body.modo-oscuro, body.modo-claro, html {
+                background-color: ${bgBase} !important;
+                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.2) 0%, ${bgBase} 75%) !important;
+                color: ${textColor} !important;
             }
 
             /* Header Hero Banner Principal */
             header.gradient-bg, header.hero-banner, .gradient-bg {
-                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.3) 0%, ${darkBg} 100%) !important;
+                background: linear-gradient(135deg, rgba(${primaryRgb}, 0.3) 0%, ${bgBase} 100%) !important;
                 border-bottom: 2px solid ${primary} !important;
             }
 
             /* Tarjetas de Encabezado (Hero Card) */
             .banner-card {
-                background: rgba(${darkBgRgb}, 0.8) !important;
+                background: rgba(${bgBaseRgb}, 0.85) !important;
                 border: 1px solid rgba(${primaryRgb}, 0.35) !important;
                 box-shadow: 0 10px 40px rgba(${primaryRgb}, 0.25) !important;
                 backdrop-filter: blur(12px) !important;
+                color: ${textColor} !important;
             }
 
             /* Títulos principales y luces ambientales */
             .logo-edark, .store-name-display {
                 color: ${primary} !important;
-                text-shadow: 0 0 20px rgba(${primaryRgb}, 0.6) !important;
+                text-shadow: 0 0 20px rgba(${primaryRgb}, 0.5) !important;
             }
             .sub-edark, .store-slogan-display {
                 color: ${secondary} !important;
@@ -102,16 +113,11 @@
                 background: rgba(${secondaryRgb}, 0.35) !important;
             }
 
-            /* Tarjetas de Producto y Paneles (Dark Mode Overrides) */
-            body.modo-oscuro .card,
-            body.modo-oscuro .modal-content,
-            body.modo-oscuro .offcanvas,
-            body.modo-oscuro .dropdown-menu,
-            body.modo-oscuro .glass-navbar,
+            /* Tarjetas de Producto y Paneles */
             .card, .modal-content, .offcanvas, .dropdown-menu {
-                background-color: rgba(${darkBgRgb}, 0.92) !important;
+                background-color: ${cardBg} !important;
                 border-color: rgba(${primaryRgb}, 0.25) !important;
-                color: #ffffff !important;
+                color: ${textColor} !important;
             }
 
             /* Sobrescribir Clases de Color de Bootstrap */
@@ -173,16 +179,10 @@
             .glass-navbar a.nav-link.active {
                 color: ${primary} !important;
             }
-            body.modo-oscuro #mainNavbar a.nav-link:hover,
-            body.modo-oscuro #mainNavbar a.nav-link.active,
-            body.modo-oscuro .glass-navbar a.nav-link:hover,
-            body.modo-oscuro .glass-navbar a.nav-link.active {
-                color: ${secondary} !important;
-            }
         `;
     }
 
-    // Aplicar branding en elementos HTML clave (Logos, Títulos, Nosotros, Servicios)
+    // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios)
     function aplicarBrandingElementos(config) {
         const c = Object.assign({}, THEME_DEFAULTS, config || {});
 
@@ -228,7 +228,16 @@
             heroSub.textContent = c.sloganTienda;
         }
 
-        // 5. Módulo Nosotros (Quiénes Somos)
+        // 5. Frases Personalizadas del Banner
+        if (c.frasesBanner && window.frases) {
+            const lineas = c.frasesBanner.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+            if (lineas.length > 0) {
+                window.frases = lineas.map(txt => ({ texto: txt, autor: c.nombreTienda }));
+                if (window.mostrarFrase) window.mostrarFrase(0);
+            }
+        }
+
+        // 6. Módulo Nosotros (Quiénes Somos)
         const nosotrosSection = document.getElementById('seccion-nosotros') || document.querySelector('.nosotros-section');
         const nosotrosNavLinks = document.querySelectorAll('a[href*="nosotros"]');
         nosotrosNavLinks.forEach(link => {
@@ -252,7 +261,7 @@
             }
         }
 
-        // 6. Módulo Servicios
+        // 7. Módulo Servicios
         const serviciosNavLinks = document.querySelectorAll('.nav-item-servicios, a[href*="consultoria"], a[href*="soporte"], a[href*="servicios"]');
         serviciosNavLinks.forEach(link => {
             if (c.serviciosHabilitado === false) {
@@ -264,7 +273,7 @@
             }
         });
 
-        // 7. Módulo Blog
+        // 8. Módulo Blog
         const blogNavLinks = document.querySelectorAll('a[href*="blog"]');
         blogNavLinks.forEach(link => {
             if (c.blogHabilitado === false) {
@@ -276,7 +285,7 @@
             }
         });
 
-        // 8. Visibilidad y Títulos del Módulo Cotizador
+        // 9. Visibilidad y Títulos del Módulo Cotizador
         const cotizadorNavLinks = document.querySelectorAll('.nav-link-cotizador, a[href*="pc-personalizada"]');
         cotizadorNavLinks.forEach(link => {
             if (c.cotizadorHabilitado === false) {

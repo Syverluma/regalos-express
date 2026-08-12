@@ -792,26 +792,40 @@
                         </div>
 
                         <!-- Selector de Colores -->
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color Primario de Marca</label>
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorPrimaryPicker" value="#2563eb" onchange="document.getElementById('cfgColorPrimary').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorPrimary" value="#2563eb" placeholder="#2563eb" onchange="document.getElementById('cfgColorPrimaryPicker').value = this.value">
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color Secundario / Acento</label>
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorSecondaryPicker" value="#10b981" onchange="document.getElementById('cfgColorSecondary').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorSecondary" value="#10b981" placeholder="#10b981" onchange="document.getElementById('cfgColorSecondaryPicker').value = this.value">
                             </div>
                         </div>
-                        <div class="col-md-4 mb-3">
+                        <div class="col-md-3 mb-3">
                             <label class="form-label fw-semibold">Color Fondo Oscuro</label>
                             <div class="d-flex align-items-center gap-2">
                                 <input type="color" class="form-control form-control-color" id="cfgColorDarkBgPicker" value="#0f172a" onchange="document.getElementById('cfgColorDarkBg').value = this.value">
                                 <input type="text" class="form-control" id="cfgColorDarkBg" value="#0f172a" placeholder="#0f172a" onchange="document.getElementById('cfgColorDarkBgPicker').value = this.value">
                             </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label fw-semibold">Modo Visual Predeterminado</label>
+                            <select class="form-select" id="cfgModoPredeterminado">
+                                <option value="oscuro">Modo Oscuro (Dark Elegante)</option>
+                                <option value="claro">Modo Claro (Light Limpio)</option>
+                            </select>
+                        </div>
+
+                        <!-- Frases del Banner -->
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-semibold">Frases o Anuncios del Banner Principal (Escribe una por línea)</label>
+                            <textarea class="form-control" id="cfgFrasesBanner" rows="3" placeholder="Ej: La excelencia está en los detalles&#10;Envíos rápidos a todo el país&#10;Atención personalizada los 7 días de la semana"></textarea>
+                            <small class="text-muted">Estas frases rotarán automáticamente en el carrusel del banner superior.</small>
                         </div>
                     </div>
 
@@ -3713,6 +3727,11 @@
                 if (elCDark) elCDark.value = cDark;
                 if (elCDarkP) elCDarkP.value = cDark;
 
+                const elModo = document.getElementById('cfgModoPredeterminado');
+                if (elModo) elModo.value = configuracionCache.modoPredeterminado || 'oscuro';
+                const elFrases = document.getElementById('cfgFrasesBanner');
+                if (elFrases) elFrases.value = configuracionCache.frasesBanner || 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada los 7 días de la semana';
+
                 // Módulos Informativos
                 const elNosHab = document.getElementById('cfgNosotrosHabilitado');
                 if (elNosHab) elNosHab.checked = configuracionCache.nosotrosHabilitado !== false;
@@ -3783,6 +3802,8 @@
                 colorPrimary: (document.getElementById('cfgColorPrimary')?.value || '#2563eb').trim(),
                 colorSecondary: (document.getElementById('cfgColorSecondary')?.value || '#10b981').trim(),
                 colorDarkBg: (document.getElementById('cfgColorDarkBg')?.value || '#0f172a').trim(),
+                modoPredeterminado: document.getElementById('cfgModoPredeterminado')?.value || 'oscuro',
+                frasesBanner: (document.getElementById('cfgFrasesBanner')?.value || '').trim(),
                 nosotrosHabilitado: document.getElementById('cfgNosotrosHabilitado') ? document.getElementById('cfgNosotrosHabilitado').checked : true,
                 nosotrosTitulo: (document.getElementById('cfgNosotrosTitulo')?.value || 'Quiénes Somos').trim(),
                 nosotrosTexto: (document.getElementById('cfgNosotrosTexto')?.value || '').trim(),
