@@ -62,69 +62,61 @@
                 <form id="contactForm" autocomplete="off">
                     <!-- Nombre -->
                     <div class="mb-4">
-                        <label for="nombre" style="display: block; font-weight: 600; font-size: 14px; color: #1a1a1a; margin-bottom: 8px;">
+                        <label for="nombre" class="form-label fw-semibold">
                             Nombre completo
                         </label>
                         <input 
                             type="text" 
                             id="nombre" 
                             name="nombre" 
+                            class="form-control rounded-3 py-3"
                             required 
                             maxlength="60"
-                            style="width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 16px; transition: all 0.3s; outline: none;"
-                            onfocus="this.style.borderColor='#007BFF'; this.style.boxShadow='0 0 0 3px rgba(0, 123, 255,0.1)'"
-                            onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'"
                             placeholder="Tu nombre completo">
                     </div>
 
                     <!-- Correo -->
                     <div class="mb-4">
-                        <label for="correo" style="display: block; font-weight: 600; font-size: 14px; color: #1a1a1a; margin-bottom: 8px;">
+                        <label for="correo" class="form-label fw-semibold">
                             Correo electrónico
                         </label>
                         <input 
                             type="email" 
                             id="correo" 
                             name="correo" 
+                            class="form-control rounded-3 py-3"
                             required 
                             maxlength="60"
-                            style="width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 16px; transition: all 0.3s; outline: none;"
-                            onfocus="this.style.borderColor='#007BFF'; this.style.boxShadow='0 0 0 3px rgba(0, 123, 255,0.1)'"
-                            onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'"
                             placeholder="ejemplo@correo.com">
                     </div>
 
                     <!-- Teléfono -->
                     <div class="mb-4">
-                        <label for="telefono" style="display: block; font-weight: 600; font-size: 14px; color: #1a1a1a; margin-bottom: 8px;">
+                        <label for="telefono" class="form-label fw-semibold">
                             Teléfono
                         </label>
                         <input 
                             type="tel" 
                             id="telefono" 
                             name="telefono" 
+                            class="form-control rounded-3 py-3"
                             maxlength="20" 
                             pattern="[0-9+ ]*"
-                            style="width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 16px; transition: all 0.3s; outline: none;"
-                            onfocus="this.style.borderColor='#007BFF'; this.style.boxShadow='0 0 0 3px rgba(0, 123, 255,0.1)'"
-                            onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'"
                             placeholder="+51 999 999 999">
                     </div>
 
                     <!-- Motivo -->
                     <div class="mb-4">
-                        <label for="motivo" style="display: block; font-weight: 600; font-size: 14px; color: #1a1a1a; margin-bottom: 8px;">
+                        <label for="motivo" class="form-label fw-semibold">
                             Motivo de contacto
                         </label>
                         <textarea 
                             id="motivo" 
                             name="motivo" 
                             rows="4" 
+                            class="form-control rounded-3 py-3"
                             required 
                             maxlength="300"
-                            style="width: 100%; padding: 14px 16px; border: 1.5px solid #e0e0e0; border-radius: 12px; font-size: 16px; transition: all 0.3s; outline: none; resize: vertical; font-family: inherit;"
-                            onfocus="this.style.borderColor='#007BFF'; this.style.boxShadow='0 0 0 3px rgba(0, 123, 255,0.1)'"
-                            onblur="this.style.borderColor='#e0e0e0'; this.style.boxShadow='none'"
                             placeholder="Cuéntanos cómo podemos ayudarte..."></textarea>
                     </div>
 

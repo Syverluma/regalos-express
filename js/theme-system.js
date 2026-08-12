@@ -193,23 +193,32 @@
                 background: rgba(${secondaryRgb}, 0.25) !important;
             }
 
-            /* 6. Navbar Glass Flotante (Capa Superior Absoluta 2147483647) */
+            /* 6. Navbar Glass Flotante (Capa Superior Absoluta 2147483647 Centrado Perfecto) */
             #navbar {
                 position: fixed !important;
                 top: 0 !important;
                 left: 0 !important;
-                right: 0 !important;
+                width: 100% !important;
+                max-width: 100vw !important;
                 z-index: 2147483647 !important;
                 pointer-events: none !important;
+                overflow: visible !important;
             }
 
             .glass-navbar, #mainNavbar {
+                position: fixed !important;
+                top: 12px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: calc(100% - 32px) !important;
+                max-width: 1400px !important;
                 background-color: rgba(${cardBgRgb}, 0.94) !important;
                 backdrop-filter: blur(16px) !important;
                 border-bottom: 1px solid rgba(${primaryRgb}, 0.2) !important;
                 color: ${textColor} !important;
                 z-index: 2147483647 !important;
                 pointer-events: auto !important;
+                box-sizing: border-box !important;
             }
 
             #mainNavbar .nav-link, 
