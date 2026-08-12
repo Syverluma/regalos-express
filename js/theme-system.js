@@ -15,18 +15,24 @@
         colorPrimary: '#2563eb',
         colorSecondary: '#10b981',
         colorDarkBg: '#0f172a',
-        modoPredeterminado: 'oscuro', // 'oscuro' o 'claro'
-        frasesBanner: 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada y garantía asegurada',
+        modoPredeterminado: 'oscuro',
+        frasesBanner: 'La excelencia está en los detalles\nEnvíos rápidos y seguros a todo el país\nAtención personalizada los 7 días de la semana',
         cotizadorHabilitado: true,
         cotizadorTitulo: 'Cotizador Personalizado',
         cotizadorSubtitulo: 'Arma tu pedido ideal a la medida',
         nosotrosHabilitado: true,
         nosotrosTitulo: 'Quiénes Somos',
         nosotrosTexto: 'Somos una empresa dedicada a ofrecer productos y servicios de alta calidad, diseñados a la medida de nuestros clientes.',
+        nosotrosMision: 'Ofrecer productos y servicios de excelencia que mejoren la vida de nuestros clientes.',
+        nosotrosVision: 'Ser líderes referentes en soluciones inteligentes e innovadoras en el mercado.',
         serviciosHabilitado: true,
         serviciosTitulo: 'Nuestros Servicios',
         serviciosSubtitulo: 'Soluciones integrales diseñadas para potenciar tu experiencia.',
-        blogHabilitado: true
+        blogHabilitado: true,
+        facebookUrl: '',
+        instagramUrl: '',
+        tiktokUrl: '',
+        copyrightText: 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.'
     };
 
     function hexToRgb(hex) {
@@ -182,7 +188,7 @@
         `;
     }
 
-    // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios)
+    // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios, Footer)
     function aplicarBrandingElementos(config) {
         const c = Object.assign({}, THEME_DEFAULTS, config || {});
 
@@ -229,7 +235,7 @@
         }
 
         // 5. Frases Personalizadas del Banner
-        if (c.frasesBanner && window.frases) {
+        if (c.frasesBanner) {
             const lineas = c.frasesBanner.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             if (lineas.length > 0) {
                 window.frases = lineas.map(txt => ({ texto: txt, autor: c.nombreTienda }));
@@ -239,16 +245,16 @@
 
         // 6. Módulo Nosotros (Quiénes Somos)
         const nosotrosSection = document.getElementById('seccion-nosotros') || document.querySelector('.nosotros-section');
-        const nosotrosNavLinks = document.querySelectorAll('a[href*="nosotros"]');
+        const nosotrosNavLinks = document.querySelectorAll('.nav-item-nosotros, a[href*="nosotros"]');
         nosotrosNavLinks.forEach(link => {
+            const target = (link.tagName === 'LI') ? link : (link.parentElement && link.parentElement.tagName === 'LI' ? link.parentElement : link);
             if (c.nosotrosHabilitado === false) {
-                link.style.display = 'none';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = 'none';
+                target.style.display = 'none';
             } else {
-                link.style.display = '';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = '';
+                target.style.display = '';
             }
         });
+
         if (nosotrosSection) {
             if (c.nosotrosHabilitado === false) {
                 nosotrosSection.style.display = 'none';
@@ -256,53 +262,103 @@
                 nosotrosSection.style.display = '';
                 const titleEl = nosotrosSection.querySelector('h2, h3, .nosotros-titulo');
                 if (titleEl && c.nosotrosTitulo) titleEl.textContent = c.nosotrosTitulo;
-                const textEl = nosotrosSection.querySelector('.nosotros-texto, p.lead');
+                const textEl = nosotrosSection.querySelector('.nosotros-texto');
                 if (textEl && c.nosotrosTexto) textEl.innerHTML = c.nosotrosTexto;
+
+                // Misión y Visión
+                const misionCard = nosotrosSection.parentElement ? nosotrosSection.parentElement.querySelectorAll('.card')[1] : null;
+                if (c.nosotrosMision) {
+                    document.querySelectorAll('h3').forEach(h3 => {
+                        if (h3.textContent.includes('Visión') && h3.nextElementSibling && c.nosotrosVision) {
+                            h3.nextElementSibling.textContent = c.nosotrosVision;
+                        }
+                        if (h3.textContent.includes('Misión') && h3.nextElementSibling && c.nosotrosMision) {
+                            h3.nextElementSibling.textContent = c.nosotrosMision;
+                        }
+                    });
+                }
             }
         }
 
-        // 7. Módulo Servicios
-        const serviciosNavLinks = document.querySelectorAll('.nav-item-servicios, a[href*="consultoria"], a[href*="soporte"], a[href*="servicios"]');
-        serviciosNavLinks.forEach(link => {
+        // 7. Módulo Servicios (Ocultar/Mostrar Navbar y Marquee)
+        const serviciosNavItems = document.querySelectorAll('.nav-item-servicios, a[href*="consultoria"], a[href*="soporte"], a[href*="servicios"]');
+        serviciosNavItems.forEach(item => {
+            const target = (item.tagName === 'LI' || item.classList.contains('nav-item-servicios')) ? item : (item.parentElement && item.parentElement.tagName === 'LI' ? item.parentElement : item);
             if (c.serviciosHabilitado === false) {
-                link.style.display = 'none';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = 'none';
+                target.style.setProperty('display', 'none', 'important');
             } else {
-                link.style.display = '';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = '';
+                target.style.display = '';
             }
         });
 
         // 8. Módulo Blog
-        const blogNavLinks = document.querySelectorAll('a[href*="blog"]');
-        blogNavLinks.forEach(link => {
+        const blogNavItems = document.querySelectorAll('.nav-item-blog, a[href*="blog"]');
+        blogNavItems.forEach(item => {
+            const target = (item.tagName === 'LI' || item.classList.contains('nav-item-blog')) ? item : (item.parentElement && item.parentElement.tagName === 'LI' ? item.parentElement : item);
             if (c.blogHabilitado === false) {
-                link.style.display = 'none';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = 'none';
+                target.style.setProperty('display', 'none', 'important');
             } else {
-                link.style.display = '';
-                if (link.parentElement && link.parentElement.tagName === 'LI') link.parentElement.style.display = '';
+                target.style.display = '';
             }
         });
 
         // 9. Visibilidad y Títulos del Módulo Cotizador
         const cotizadorNavLinks = document.querySelectorAll('.nav-link-cotizador, a[href*="pc-personalizada"]');
         cotizadorNavLinks.forEach(link => {
+            const target = (link.tagName === 'LI') ? link : (link.parentElement && link.parentElement.tagName === 'LI' ? link.parentElement : link);
             if (c.cotizadorHabilitado === false) {
-                link.style.display = 'none';
-                if (link.parentElement && link.parentElement.tagName === 'LI') {
-                    link.parentElement.style.display = 'none';
-                }
+                target.style.setProperty('display', 'none', 'important');
             } else {
-                link.style.display = '';
-                if (link.parentElement && link.parentElement.tagName === 'LI') {
-                    link.parentElement.style.display = '';
-                }
+                target.style.display = '';
                 if (c.cotizadorTitulo && link.classList.contains('cotizador-nav-title')) {
                     link.innerHTML = `<i class="bi bi-sliders me-1"></i> ${c.cotizadorTitulo}`;
                 }
             }
         });
+
+        // 10. Datos de Contacto y Redes Sociales en Footer
+        document.querySelectorAll('.footer-email').forEach(el => {
+            if (c.emailContacto) {
+                el.textContent = c.emailContacto;
+                el.href = `mailto:${c.emailContacto}`;
+            }
+        });
+        document.querySelectorAll('.footer-phone').forEach(el => {
+            if (c.telefonoWhatsapp) {
+                el.textContent = `+${c.telefonoWhatsapp}`;
+                el.href = `tel:+${c.telefonoWhatsapp}`;
+            }
+        });
+        document.querySelectorAll('.footer-address').forEach(el => {
+            if (c.direccionFisica) el.textContent = c.direccionFisica;
+        });
+
+        // Redes sociales
+        const fbBtn = document.querySelector('.footer-fb-link');
+        if (fbBtn) {
+            if (c.facebookUrl) { fbBtn.href = c.facebookUrl; fbBtn.style.display = ''; }
+            else { fbBtn.style.display = 'none'; }
+        }
+        const igBtn = document.querySelector('.footer-ig-link');
+        if (igBtn) {
+            if (c.instagramUrl) { igBtn.href = c.instagramUrl; igBtn.style.display = ''; }
+            else { igBtn.style.display = 'none'; }
+        }
+        const tkBtn = document.querySelector('.footer-tk-link');
+        if (tkBtn) {
+            if (c.tiktokUrl) { tkBtn.href = c.tiktokUrl; tkBtn.style.display = ''; }
+            else { tkBtn.style.display = 'none'; }
+        }
+        const waBtn = document.querySelector('.footer-wa-link');
+        if (waBtn) {
+            if (c.telefonoWhatsapp) { waBtn.href = `https://wa.me/${c.telefonoWhatsapp}`; waBtn.style.display = ''; }
+        }
+
+        // Copyright en Footer
+        const copyEl = document.querySelector('.footer-copyright');
+        if (copyEl && c.copyrightText) {
+            copyEl.innerHTML = `&copy; ${new Date().getFullYear()} ${c.copyrightText}`;
+        }
     }
 
     // Método principal para cargar configuración de Firestore e inicializar el tema

@@ -844,7 +844,37 @@
                         </div>
                         <div class="col-md-12 mb-3">
                             <label class="form-label fw-semibold">Descripción o Historia de la Empresa</label>
-                            <textarea class="form-control" id="cfgNosotrosTexto" rows="4" placeholder="Escribe aquí la historia o propuesta de valor de tu negocio..."></textarea>
+                            <textarea class="form-control" id="cfgNosotrosTexto" rows="3" placeholder="Escribe aquí la historia o propuesta de valor de tu negocio..."></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Misión de la Empresa</label>
+                            <textarea class="form-control" id="cfgNosotrosMision" rows="2" placeholder="Ej: Ofrecer productos y servicios de excelencia..."></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Visión de la Empresa</label>
+                            <textarea class="form-control" id="cfgNosotrosVision" rows="2" placeholder="Ej: Ser líderes referentes en el mercado..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Redes Sociales & Pie de Página (Footer) -->
+                    <h5 class="text-primary fw-bold mb-3"><i class="bi bi-share me-2"></i>Redes Sociales & Pie de Página (Footer)</h5>
+                    <div class="row bg-light p-3 rounded border mb-4 text-dark">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold">URL de Facebook</label>
+                            <input type="url" class="form-control" id="cfgFacebookUrl" placeholder="https://facebook.com/mitienda" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold">URL de Instagram</label>
+                            <input type="url" class="form-control" id="cfgInstagramUrl" placeholder="https://instagram.com/mitienda" />
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold">URL de TikTok</label>
+                            <input type="url" class="form-control" id="cfgTiktokUrl" placeholder="https://tiktok.com/@mitienda" />
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-semibold">Texto de Copyright y Propiedad del Footer</label>
+                            <input type="text" class="form-control" id="cfgCopyrightText" placeholder="Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados." />
+                            <small class="text-muted">Este texto aparecerá en el pie de página de la tienda.</small>
                         </div>
                     </div>
 
@@ -3737,8 +3767,19 @@
                 if (elNosHab) elNosHab.checked = configuracionCache.nosotrosHabilitado !== false;
                 const elNosTit = document.getElementById('cfgNosotrosTitulo');
                 if (elNosTit) elNosTit.value = configuracionCache.nosotrosTitulo || 'Quiénes Somos';
-                const elNosTxt = document.getElementById('cfgNosotrosTexto');
-                if (elNosTxt) elNosTxt.value = configuracionCache.nosotrosTexto || 'Somos una empresa dedicada a ofrecer productos y servicios de alta calidad, diseñados a la medida de nuestros clientes.';
+                const elNosMis = document.getElementById('cfgNosotrosMision');
+                if (elNosMis) elNosMis.value = configuracionCache.nosotrosMision || 'Ofrecer productos y servicios de excelencia que mejoren la vida de nuestros clientes.';
+                const elNosVis = document.getElementById('cfgNosotrosVision');
+                if (elNosVis) elNosVis.value = configuracionCache.nosotrosVision || 'Ser líderes referentes en soluciones inteligentes e innovadoras en el mercado.';
+
+                const elFb = document.getElementById('cfgFacebookUrl');
+                if (elFb) elFb.value = configuracionCache.facebookUrl || '';
+                const elIg = document.getElementById('cfgInstagramUrl');
+                if (elIg) elIg.value = configuracionCache.instagramUrl || '';
+                const elTk = document.getElementById('cfgTiktokUrl');
+                if (elTk) elTk.value = configuracionCache.tiktokUrl || '';
+                const elCopy = document.getElementById('cfgCopyrightText');
+                if (elCopy) elCopy.value = configuracionCache.copyrightText || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.';
 
                 const elSerHab = document.getElementById('cfgServiciosHabilitado');
                 if (elSerHab) elSerHab.checked = configuracionCache.serviciosHabilitado !== false;
@@ -3807,6 +3848,12 @@
                 nosotrosHabilitado: document.getElementById('cfgNosotrosHabilitado') ? document.getElementById('cfgNosotrosHabilitado').checked : true,
                 nosotrosTitulo: (document.getElementById('cfgNosotrosTitulo')?.value || 'Quiénes Somos').trim(),
                 nosotrosTexto: (document.getElementById('cfgNosotrosTexto')?.value || '').trim(),
+                nosotrosMision: (document.getElementById('cfgNosotrosMision')?.value || '').trim(),
+                nosotrosVision: (document.getElementById('cfgNosotrosVision')?.value || '').trim(),
+                facebookUrl: (document.getElementById('cfgFacebookUrl')?.value || '').trim(),
+                instagramUrl: (document.getElementById('cfgInstagramUrl')?.value || '').trim(),
+                tiktokUrl: (document.getElementById('cfgTiktokUrl')?.value || '').trim(),
+                copyrightText: (document.getElementById('cfgCopyrightText')?.value || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.').trim(),
                 serviciosHabilitado: document.getElementById('cfgServiciosHabilitado') ? document.getElementById('cfgServiciosHabilitado').checked : true,
                 serviciosTitulo: (document.getElementById('cfgServiciosTitulo')?.value || 'Nuestros Servicios').trim(),
                 serviciosSubtitulo: (document.getElementById('cfgServiciosSubtitulo')?.value || '').trim(),
