@@ -1587,22 +1587,30 @@ body::before {
    ========================================================================== */
 
 .liquid-glass-card,
-.glass-navbar,
 .banner-card {
     position: relative;
-    isolation: isolate;
     border-radius: 28px;
     box-shadow: 0px 0px 21px -8px rgba(255, 255, 255, 0.3) !important;
 }
 
-.glass-navbar {
+#navbar {
     position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 2147483647 !important;
+    pointer-events: none !important;
+}
+
+.glass-navbar,
+#mainNavbar {
+    position: relative !important;
     top: 15px !important;
     left: 24px !important;
     right: 24px !important;
     width: auto !important;
     border-radius: 50px !important;
-    z-index: 99999 !important;
+    z-index: 2147483647 !important;
     padding: 0.5rem 1.6rem !important;
     background: transparent !important;
     pointer-events: auto !important;
@@ -1611,10 +1619,14 @@ body::before {
 /* Ensure inner elements sit cleanly above glass layers */
 .liquid-glass-card > *,
 .glass-navbar > *,
-.banner-card > * {
+.banner-card > *,
+.glass-navbar a,
+.glass-navbar button,
+.glass-navbar .nav-link {
     position: relative !important;
-    z-index: 100000 !important;
+    z-index: 2147483647 !important;
     pointer-events: auto !important;
+    cursor: pointer !important;
 }
 
 /* Tint and inner shadow layer */

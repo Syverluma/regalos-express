@@ -193,13 +193,22 @@
                 background: rgba(${secondaryRgb}, 0.25) !important;
             }
 
-            /* 6. Navbar Glass Flotante (Capa Superior 99999) */
-            .glass-navbar, #mainNavbar, #navbar {
+            /* 6. Navbar Glass Flotante (Capa Superior Absoluta 2147483647) */
+            #navbar {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 2147483647 !important;
+                pointer-events: none !important;
+            }
+
+            .glass-navbar, #mainNavbar {
                 background-color: rgba(${cardBgRgb}, 0.94) !important;
                 backdrop-filter: blur(16px) !important;
                 border-bottom: 1px solid rgba(${primaryRgb}, 0.2) !important;
                 color: ${textColor} !important;
-                z-index: 99999 !important;
+                z-index: 2147483647 !important;
                 pointer-events: auto !important;
             }
 
@@ -208,9 +217,10 @@
             #mainNavbar button, 
             .glass-navbar .nav-link, 
             .glass-navbar a,
-            .navbar-toggler {
+            .navbar-toggler,
+            .navbar-brand {
                 position: relative !important;
-                z-index: 100001 !important;
+                z-index: 2147483647 !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
             }
