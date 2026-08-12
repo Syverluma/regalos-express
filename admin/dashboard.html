@@ -474,6 +474,8 @@
                         class="bi bi-clipboard-data"></i> Inventario</a></li>
             <li><a href="javascript:void(0)" data-section="clientes" onclick="cambiarSeccion('clientes')"><i
                         class="bi bi-people"></i> Clientes</a></li>
+            <li><a href="javascript:void(0)" data-section="servicios" onclick="cambiarSeccion('servicios')"><i
+                        class="bi bi-briefcase"></i> Servicios</a></li>
             <li><a href="javascript:void(0)" data-section="blog" onclick="cambiarSeccion('blog')"><i
                         class="bi bi-newspaper"></i> Blog</a></li>
             <li><a href="javascript:void(0)" data-section="publicidad" onclick="cambiarSeccion('publicidad')"><i
@@ -686,6 +688,34 @@
                                         <span class="visually-hidden">Cargando...</span>
                                     </div>
                                 </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Servicios -->
+        <div id="serviciosSection" style="display:none;">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-title"><i class="bi bi-briefcase me-2"></i>Gestión de Servicios de la Tienda</h2>
+                <button class="btn btn-primary rounded-pill px-4 shadow-sm" onclick="abrirModalServicio()"><i class="bi bi-plus-circle me-1"></i> Crear Nuevo Servicio</button>
+            </div>
+            <div class="table-container">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">Ícono / Imagen</th>
+                                <th>Título del Servicio</th>
+                                <th>Subtítulo / Resumen</th>
+                                <th>Estado</th>
+                                <th class="text-end">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaServiciosAdmin">
+                            <tr>
+                                <td colspan="5" class="text-center py-4 text-muted">Cargando servicios...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -1535,6 +1565,68 @@
             </div>
         </div>
 
+        <!-- Modal Crear/Editar Servicio -->
+        <div class="modal fade" id="modalServicio" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content text-dark rounded-4 border-0 shadow">
+                    <div class="modal-header border-bottom">
+                        <h5 class="modal-title fw-bold" id="modalServicioTitulo"><i class="bi bi-briefcase me-2"></i> Servicio</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="srvId">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label class="form-label fw-semibold">Nombre / Título del Servicio *</label>
+                                <input type="text" class="form-control" id="srvTitulo" placeholder="Ej: Envoltura de Regalo Personalizada, Entrega a Domicilio" required>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label fw-semibold">Ícono representativo</label>
+                                <select class="form-select" id="srvIcono">
+                                    <option value="bi-gift">bi-gift 🎁 (Regalo / Detalle)</option>
+                                    <option value="bi-heart">bi-heart ❤️ (Amor / Personalizado)</option>
+                                    <option value="bi-truck">bi-truck 🚚 (Envío / Delivery)</option>
+                                    <option value="bi-shop">bi-shop 🏪 (Tienda / Servicio)</option>
+                                    <option value="bi-balloon">bi-balloon 🎈 (Celebración)</option>
+                                    <option value="bi-star">bi-star ⭐ (Especial / Premium)</option>
+                                    <option value="bi-tools">bi-tools 🛠️ (Soporte / Mantenimiento)</option>
+                                    <option value="bi-lightbulb">bi-lightbulb 💡 (Asesoría / Consultoría)</option>
+                                    <option value="bi-patch-check">bi-patch-check 🛡️ (Garantía)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-semibold">Subtítulo / Resumen Breve</label>
+                                <input type="text" class="form-control" id="srvSubtitulo" placeholder="Breve frase explicativa para la tarjeta de presentación">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-semibold">Imagen del Servicio (Opcional)</label>
+                                <div class="input-group mb-1">
+                                    <input type="url" class="form-control" id="srvImagenUrl" placeholder="https://... o sube un archivo">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('fileSrvImagen').click()"><i class="bi bi-upload me-1"></i> Subir Foto</button>
+                                </div>
+                                <input type="file" id="fileSrvImagen" class="d-none" accept="image/*" onchange="subirImagenServicio(this)">
+                                <div id="srvImagenStatus"></div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="form-label fw-semibold">Descripción Detallada / Contenido de la Página</label>
+                                <textarea class="form-control" id="srvContenido" rows="5" placeholder="Explica detalladamente en qué consiste este servicio, qué incluye y los beneficios para el cliente..."></textarea>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="srvActivo" checked>
+                                    <label class="form-check-label fw-semibold" for="srvActivo">Servicio Activo en la Tienda</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-top">
+                        <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary rounded-pill px-4" onclick="guardarServicio()"><i class="bi bi-save me-1"></i> Guardar Servicio</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Otras secciones -->
         <div id="otrasSeccionesContent" style="display: none;">
             <h2>Sección en desarrollo</h2>
@@ -2014,7 +2106,7 @@
             const sections = [
                 'dashboardSection', 'productosSection', 'categoriasSection',
                 'configuracionSection', 'pcConfigSection', 'ventasSection', 'inventarioSection',
-                'clientesSection', 'blogSection', 'publicidadSection', 'reportesSection',
+                'clientesSection', 'serviciosSection', 'blogSection', 'publicidadSection', 'reportesSection',
                 'otrasSeccionesContent'
             ];
 
@@ -2037,6 +2129,7 @@
                 case 'dashboard': cargarDashboard(); break;
                 case 'productos': cargarProductos(); break;
                 case 'categorias': cargarCategorias(); break;
+                case 'servicios': cargarServiciosAdmin(); break;
                 case 'configuracion': cargarConfiguracion(); break;
                 case 'pcConfig': cargarPreciosPC(); break;
                 case 'ventas': cargarVentas(); break;
@@ -2045,6 +2138,168 @@
                 case 'blog': cargarBlog(); break;
                 case 'publicidad': cargarPublicidad(); break;
                 case 'reportes': cargarReportes(); break;
+            }
+        }
+
+        // === MÓDULO DE GESTIÓN DE SERVICIOS ===
+        let modalServicioInstance = null;
+
+        async function cargarServiciosAdmin() {
+            const tbody = document.getElementById('tablaServiciosAdmin');
+            if (!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4"><div class="spinner-border text-primary"></div><span class="ms-2">Cargando catálogo de servicios...</span></td></tr>';
+            try {
+                const snap = await db.collection('servicios').get();
+                tbody.innerHTML = '';
+                if (snap.empty) {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-muted"><i class="bi bi-info-circle me-1"></i> No hay servicios personalizados creados aún. Haz clic en <strong>"+ Crear Nuevo Servicio"</strong> para agregar uno.</td></tr>';
+                    return;
+                }
+
+                snap.forEach(doc => {
+                    const s = doc.data();
+                    const id = doc.id;
+                    const imgHtml = s.imagenUrl 
+                        ? `<img src="${s.imagenUrl}" width="45" height="45" class="rounded object-fit-cover shadow-sm me-2">` 
+                        : `<span class="badge bg-primary bg-opacity-10 text-primary p-2 fs-5 me-2"><i class="bi ${s.icono || 'bi-briefcase'}"></i></span>`;
+                    
+                    const estadoBadge = s.activo !== false 
+                        ? '<span class="badge bg-success bg-opacity-10 text-success border border-success rounded-pill px-2 py-1">Activo</span>'
+                        : '<span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary rounded-pill px-2 py-1">Inactivo</span>';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td><div class="d-flex align-items-center">${imgHtml}</div></td>
+                            <td><strong class="text-dark">${s.titulo || 'Servicio'}</strong></td>
+                            <td><small class="text-muted d-inline-block text-truncate" style="max-width:280px;">${s.subtitulo || '-'}</small></td>
+                            <td>${estadoBadge}</td>
+                            <td class="text-end">
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="editarServicio('${id}')" title="Editar"><i class="bi bi-pencil"></i></button>
+                                <a href="../servicio.html?id=${id}" target="_blank" class="btn btn-sm btn-outline-info me-1" title="Ver en Tienda"><i class="bi bi-eye"></i></a>
+                                <button class="btn btn-sm btn-outline-danger" onclick="eliminarServicio('${id}', '${(s.titulo||'').replace(/'/g, "\\'")}')" title="Eliminar"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                });
+            } catch (e) {
+                console.error('Error cargando servicios:', e);
+                tbody.innerHTML = `<tr><td colspan="5" class="text-center text-danger py-4"><i class="bi bi-exclamation-triangle me-2"></i>Error al cargar servicios: ${e.message}</td></tr>`;
+            }
+        }
+
+        function abrirModalServicio() {
+            if (!modalServicioInstance) {
+                modalServicioInstance = new bootstrap.Modal(document.getElementById('modalServicio'));
+            }
+            document.getElementById('srvId').value = '';
+            document.getElementById('srvTitulo').value = '';
+            document.getElementById('srvSubtitulo').value = '';
+            document.getElementById('srvIcono').value = 'bi-gift';
+            document.getElementById('srvImagenUrl').value = '';
+            document.getElementById('srvContenido').value = '';
+            document.getElementById('srvActivo').checked = true;
+            document.getElementById('modalServicioTitulo').innerHTML = '<i class="bi bi-briefcase me-2"></i> Crear Nuevo Servicio';
+            modalServicioInstance.show();
+        }
+
+        async function editarServicio(id) {
+            if (!modalServicioInstance) {
+                modalServicioInstance = new bootstrap.Modal(document.getElementById('modalServicio'));
+            }
+            try {
+                const snap = await db.collection('servicios').doc(id).get();
+                if (snap.exists) {
+                    const s = snap.data();
+                    document.getElementById('srvId').value = id;
+                    document.getElementById('srvTitulo').value = s.titulo || '';
+                    document.getElementById('srvSubtitulo').value = s.subtitulo || '';
+                    document.getElementById('srvIcono').value = s.icono || 'bi-gift';
+                    document.getElementById('srvImagenUrl').value = s.imagenUrl || '';
+                    document.getElementById('srvContenido').value = s.contenido || '';
+                    document.getElementById('srvActivo').checked = s.activo !== false;
+                    document.getElementById('modalServicioTitulo').innerHTML = '<i class="bi bi-pencil-square me-2"></i> Editar Servicio';
+                    modalServicioInstance.show();
+                }
+            } catch (e) {
+                alert('Error cargando servicio: ' + e.message);
+            }
+        }
+
+        async function guardarServicio() {
+            const id = document.getElementById('srvId').value;
+            const titulo = document.getElementById('srvTitulo').value.trim();
+            const subtitulo = document.getElementById('srvSubtitulo').value.trim();
+            const icono = document.getElementById('srvIcono').value;
+            const imagenUrl = document.getElementById('srvImagenUrl').value.trim();
+            const contenido = document.getElementById('srvContenido').value.trim();
+            const activo = document.getElementById('srvActivo').checked;
+
+            if (!titulo) {
+                alert('Por favor ingresa el título del servicio.');
+                return;
+            }
+
+            const data = {
+                titulo,
+                subtitulo,
+                icono,
+                imagenUrl,
+                contenido,
+                activo,
+                fechaActualizacion: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            try {
+                if (id) {
+                    await db.collection('servicios').doc(id).set(data, { merge: true });
+                } else {
+                    data.fechaCreacion = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('servicios').add(data);
+                }
+                modalServicioInstance.hide();
+                cargarServiciosAdmin();
+                alert('Servicio guardado exitosamente');
+            } catch (e) {
+                console.error('Error guardando servicio:', e);
+                alert('Error al guardar servicio: ' + e.message);
+            }
+        }
+
+        async function eliminarServicio(id, titulo) {
+            if (!confirm(`¿Estás seguro de eliminar el servicio "${titulo}"?`)) return;
+            try {
+                await db.collection('servicios').doc(id).delete();
+                cargarServiciosAdmin();
+            } catch (e) {
+                alert('Error al eliminar servicio: ' + e.message);
+            }
+        }
+
+        async function subirImagenServicio(input) {
+            const file = input.files[0];
+            const statusEl = document.getElementById('srvImagenStatus');
+            if (!file) return;
+            if (statusEl) statusEl.innerHTML = '<small class="text-primary">Subiendo imagen...</small>';
+            try {
+                const apiKey = (window.configGeneral?.imgbbApiKey || '8ad2018c89938ae8432f74460705a97c').trim();
+                let imgUrl = '';
+                if (apiKey) {
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, { method: 'POST', body: formData });
+                    const data = await res.json();
+                    if (data && data.data && data.data.url) {
+                        imgUrl = data.data.url;
+                    }
+                }
+                if (!imgUrl) {
+                    imgUrl = await comprimirImagenCanvas(file, 900, 0.82);
+                }
+                document.getElementById('srvImagenUrl').value = imgUrl;
+                if (statusEl) statusEl.innerHTML = '<small class="text-success"><i class="bi bi-check-circle"></i> Imagen subida</small>';
+            } catch (e) {
+                console.error('Error subiendo imagen de servicio:', e);
+                if (statusEl) statusEl.innerHTML = '<small class="text-danger">Error al procesar imagen</small>';
             }
         }
 

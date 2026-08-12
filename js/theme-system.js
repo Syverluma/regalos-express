@@ -188,6 +188,40 @@
         `;
     }
 
+    // Cargar Servicios creados dinámicamente en Firestore en el Menú y Footer
+    async function cargarServiciosDinamicosMenu(c) {
+        if (c.serviciosHabilitado === false) return;
+        if (typeof firebase === 'undefined' || !firebase.firestore) return;
+        try {
+            const snap = await firebase.firestore().collection('servicios').where('activo', '==', true).get();
+            if (snap.empty) return;
+
+            const dropdown = document.querySelector('.nav-item-servicios .dropdown-menu');
+            const footerLista = document.querySelector('.footer-servicios-lista');
+
+            let dropHtml = '';
+            let footHtml = '';
+
+            snap.forEach(doc => {
+                const s = doc.data();
+                const id = doc.id;
+                const icono = s.icono || 'bi-briefcase';
+                dropHtml += `<li><a class="dropdown-item rounded-3 py-2 fw-medium" href="servicio.html?id=${id}"><i class="bi ${icono} text-primary me-2"></i>${s.titulo}</a></li>`;
+                footHtml += `<li><a href="servicio.html?id=${id}" class="text-white text-decoration-none">${s.titulo}</a></li>`;
+            });
+
+            if (c.cotizadorHabilitado !== false) {
+                const cotTitle = c.cotizadorTitulo || 'Cotizador Personalizado';
+                dropHtml += `<li><hr class="dropdown-divider"></li><li><a class="dropdown-item rounded-3 py-2 fw-medium nav-link-cotizador cotizador-nav-title" href="pc-personalizada.html"><i class="bi bi-sliders text-warning me-2"></i>${cotTitle}</a></li>`;
+            }
+
+            if (dropdown) dropdown.innerHTML = dropHtml;
+            if (footerLista) footerLista.innerHTML = footHtml;
+        } catch (e) {
+            console.warn('[Tema] No se pudieron cargar los servicios dinámicos:', e);
+        }
+    }
+
     // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios, Footer)
     function aplicarBrandingElementos(config) {
         const c = Object.assign({}, THEME_DEFAULTS, config || {});
@@ -266,17 +300,14 @@
                 if (textEl && c.nosotrosTexto) textEl.innerHTML = c.nosotrosTexto;
 
                 // Misión y Visión
-                const misionCard = nosotrosSection.parentElement ? nosotrosSection.parentElement.querySelectorAll('.card')[1] : null;
-                if (c.nosotrosMision) {
-                    document.querySelectorAll('h3').forEach(h3 => {
-                        if (h3.textContent.includes('Visión') && h3.nextElementSibling && c.nosotrosVision) {
-                            h3.nextElementSibling.textContent = c.nosotrosVision;
-                        }
-                        if (h3.textContent.includes('Misión') && h3.nextElementSibling && c.nosotrosMision) {
-                            h3.nextElementSibling.textContent = c.nosotrosMision;
-                        }
-                    });
-                }
+                document.querySelectorAll('h3').forEach(h3 => {
+                    if (h3.textContent.includes('Visión') && h3.nextElementSibling && c.nosotrosVision) {
+                        h3.nextElementSibling.textContent = c.nosotrosVision;
+                    }
+                    if (h3.textContent.includes('Misión') && h3.nextElementSibling && c.nosotrosMision) {
+                        h3.nextElementSibling.textContent = c.nosotrosMision;
+                    }
+                });
             }
         }
 
@@ -290,6 +321,9 @@
                 target.style.display = '';
             }
         });
+
+        // Cargar servicios dinámicos desde Firestore si existen
+        cargarServiciosDinamicosMenu(c);
 
         // 8. Módulo Blog
         const blogNavItems = document.querySelectorAll('.nav-item-blog, a[href*="blog"]');
