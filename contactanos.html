@@ -56,10 +56,9 @@
         </div>
     </header>
 
-    <!-- Formulario Moderno iOS/Copilot Style -->
-    <section class="contact-section" style="padding: 60px 0; background: #f8f9fa;">
+    <section class="contact-section" style="padding: 60px 0;">
         <div class="container" style="max-width: 650px;">
-            <div class="contact-card" style="background: white; border-radius: 20px; padding: 48px; box-shadow: 0 8px 32px rgba(0,0,0,0.08);">
+            <div class="contact-card card p-4 p-md-5 rounded-4 shadow-lg border-0">
                 <form id="contactForm" autocomplete="off">
                     <!-- Nombre -->
                     <div class="mb-4">
@@ -319,6 +318,10 @@ Preferencia de contacto: ${preferencias.join(', ')}`;
         });
     });
     </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="js/firebase-config.js"></script>
+    <script src="js/theme-system.js"></script>
     <script src="js/scripts.js"></script>
 </body>
 </html>

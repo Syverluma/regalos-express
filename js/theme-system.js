@@ -33,7 +33,10 @@
         facebookUrl: '',
         instagramUrl: '',
         tiktokUrl: '',
-        copyrightText: 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.'
+        copyrightText: 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.',
+        ogTitle: '',
+        ogDescription: '',
+        ogImage: ''
     };
 
     function hexToRgb(hex) {
@@ -43,7 +46,7 @@
         return `${(num >> 16) & 255}, ${(num >> 8) & 255}, ${num & 255}`;
     }
 
-    // Inyectar variables CSS universales para armonizar el 100% de la tienda (Fondo, Tarjetas, Filtros, Navbar, Footer)
+    // Inyectar variables CSS universales para armonizar el 100% de la tienda en TODAS las páginas
     function aplicarEstilosTema(config) {
         const root = document.documentElement;
         const primary = config.colorPrimary || THEME_DEFAULTS.colorPrimary;
@@ -70,7 +73,6 @@
         }
 
         const bgBase = esModoClaro ? '#f8fafc' : darkBg;
-        const bgBaseRgb = esModoClaro ? '248, 250, 252' : darkBgRgb;
         const textColor = esModoClaro ? '#0f172a' : '#ffffff';
         const cardBg = esModoClaro ? (config.colorCardBg || '#ffffff') : cardBgCustom;
 
@@ -83,20 +85,20 @@
                 --bg-dark-custom: ${darkBg} !important;
             }
             
-            /* 1. Fondo Principal de la Tienda y Secciones Intermedias (Eliminar Negro Duro) */
-            body, body.modo-oscuro, body.modo-claro, html, section, .py-5, #seccionCatalogo, #servicios-marquee {
+            /* 1. Fondo Universal Unificado para TODAS las Páginas y Secciones */
+            body, body.modo-oscuro, body.modo-claro, html, section, .py-5, #seccionCatalogo, #servicios-marquee, .contact-section, .nosotros-section, .blog-section, main, .article-main {
                 background-color: ${bgBase} !important;
-                background-image: radial-gradient(ellipse at 50% -10%, rgba(${primaryRgb}, 0.18) 0%, ${bgBase} 75%) !important;
+                background: ${bgBase} !important;
                 color: ${textColor} !important;
             }
 
-            /* 2. Header Hero Banner Principal */
+            /* 2. Header Hero Banner Unificado */
             header, header.gradient-bg, header.hero-banner, .gradient-bg, .blog-hero, .post-hero {
                 background: linear-gradient(135deg, rgba(${primaryRgb}, 0.25) 0%, ${bgBase} 100%) !important;
                 border-bottom: 2px solid ${primary} !important;
             }
 
-            /* 3. Tarjetas, Paneles, Filtros y Acordeones Armonizados */
+            /* 3. Tarjetas, Paneles, Filtros, Formulario de Contacto y Acordeones (Eliminar blanco y negro desentonado) */
             .card,
             .filter-card-modern,
             .control-bar-modern,
@@ -106,7 +108,12 @@
             .accordion-body,
             .modal-content,
             .offcanvas,
-            .dropdown-menu {
+            .dropdown-menu,
+            .contact-section .card,
+            .contact-card,
+            .bg-white,
+            .bg-light,
+            .live-search-dropdown {
                 background-color: ${cardBg} !important;
                 background: ${cardBg} !important;
                 border: 1px solid rgba(${primaryRgb}, 0.22) !important;
@@ -129,10 +136,12 @@
                 box-shadow: none !important;
             }
 
-            /* 4. Buscador, Selects e Inputs de Control */
+            /* 4. Buscador, Inputs, Textareas, Selects y Controles de Formulario */
+            .form-control,
+            .form-select,
+            .input-group,
             .control-bar-modern input,
             .control-bar-modern select,
-            .control-bar-modern .input-group,
             .product-card-premium .product-img-wrapper,
             #buscarProductoInput,
             #ordenarSelect {
@@ -142,12 +151,19 @@
                 color: ${textColor} !important;
             }
 
-            /* 5. Títulos principales y luces ambientales */
-            h1, h2, h3, h4, h5, h6, .display-6, .section-title {
+            .form-control:focus, .form-select:focus {
+                background-color: rgba(${primaryRgb}, 0.12) !important;
+                border-color: ${primary} !important;
+                color: ${textColor} !important;
+                box-shadow: 0 0 10px rgba(${primaryRgb}, 0.3) !important;
+            }
+
+            /* 5. Títulos principales y subtítulos armonizados */
+            h1, h2, h3, h4, h5, h6, .display-4, .display-6, .section-title, .lead, .text-dark {
                 color: ${textColor} !important;
             }
-            .text-muted {
-                color: ${textColor}aa !important;
+            .text-muted, .text-info {
+                color: ${secondary} !important;
             }
 
             .logo-edark, .store-name-display {
@@ -167,15 +183,15 @@
             }
 
             /* 6. Navbar Flotante Glass */
-            .glass-navbar, #mainNavbar {
-                background-color: rgba(${cardBgRgb}, 0.88) !important;
+            .glass-navbar, #mainNavbar, #navbar {
+                background-color: rgba(${cardBgRgb}, 0.92) !important;
                 backdrop-filter: blur(12px) !important;
                 border-bottom: 1px solid rgba(${primaryRgb}, 0.25) !important;
                 color: ${textColor} !important;
             }
 
             /* 7. Footer Estilizado Armonioso (Eliminar Negro Rígido) */
-            footer, footer.bg-dark, .py-5.bg-dark {
+            footer, footer.bg-dark, .py-5.bg-dark, #footer-container {
                 background-color: ${bgBase} !important;
                 background: ${bgBase} !important;
                 border-top: 2px solid ${primary} !important;
