@@ -1624,7 +1624,7 @@ body::before {
     content: '' !important;
     position: absolute !important;
     inset: 0 !important;
-    z-index: 0 !important;
+    z-index: -1 !important;
     border-radius: inherit !important;
     box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.95), 0 10px 35px rgba(0, 0, 0, 0.1) !important;
     background-color: rgba(255, 255, 255, 0.82) !important;
@@ -1644,11 +1644,6 @@ body::before {
     border-radius: inherit !important;
     backdrop-filter: blur(16px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
-    filter: url(#glass-distortion) !important;
-    -webkit-filter: url(#glass-distortion) !important;
-    isolation: isolate !important;
-    clip-path: inset(0 round inherit) !important;
-    -webkit-clip-path: inset(0 round inherit) !important;
     pointer-events: none !important;
 }
 

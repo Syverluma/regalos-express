@@ -210,9 +210,15 @@
             .glass-navbar a,
             .navbar-toggler {
                 position: relative !important;
-                z-index: 100000 !important;
+                z-index: 100001 !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
+            }
+
+            .glass-navbar::before,
+            .glass-navbar::after {
+                pointer-events: none !important;
+                z-index: -1 !important;
             }
 
             /* 7. Footer Armonizado */
