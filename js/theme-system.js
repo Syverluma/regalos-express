@@ -278,18 +278,38 @@
         }
     }
 
-    // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios, Footer)
+    // Aplicar branding en elementos HTML clave (Logos, Títulos, Frases Banner, Nosotros, Servicios, Footer, Meta OG)
     function aplicarBrandingElementos(config) {
         const c = Object.assign({}, THEME_DEFAULTS, config || {});
 
-        // 1. Título del Documento
-        if (c.nombreTienda) {
-            const parts = document.title.split('-');
-            const pagePrefix = parts[0] ? parts[0].trim() : '';
-            if (!document.title.includes(c.nombreTienda)) {
-                document.title = `${pagePrefix} - ${c.nombreTienda}`;
-            }
+        // 1. Título del Documento y Meta Tags para Redes Sociales / WhatsApp
+        const ogTitleText = c.ogTitle || c.nombreTienda || 'Syverluma Store';
+        const ogDescText = c.ogDescription || c.sloganTienda || 'Tu plataforma de comercio electrónico a la medida.';
+        const ogImgUrl = c.ogImage || c.logoPrincipalUrl || c.logoIsotipoUrl || 'img/Logo/logo_2.png';
+
+        if (c.nombreTienda && !document.title.includes(c.nombreTienda)) {
+            const pagePrefix = document.title.split('-')[0] ? document.title.split('-')[0].trim() : '';
+            document.title = pagePrefix ? `${pagePrefix} - ${c.nombreTienda}` : ogTitleText;
         }
+
+        const setMetaTag = (attrName, attrVal, contentVal) => {
+            if (!contentVal) return;
+            let el = document.querySelector(`meta[${attrName}="${attrVal}"]`);
+            if (!el) {
+                el = document.createElement('meta');
+                el.setAttribute(attrName, attrVal);
+                document.head.appendChild(el);
+            }
+            el.setAttribute('content', contentVal);
+        };
+
+        setMetaTag('property', 'og:title', ogTitleText);
+        setMetaTag('property', 'og:description', ogDescText);
+        setMetaTag('property', 'og:image', ogImgUrl);
+        setMetaTag('name', 'twitter:title', ogTitleText);
+        setMetaTag('name', 'twitter:description', ogDescText);
+        setMetaTag('name', 'twitter:image', ogImgUrl);
+        setMetaTag('name', 'description', ogDescText);
 
         // 2. Favicon
         const faviconUrl = c.faviconUrl || c.logoIsotipoUrl;

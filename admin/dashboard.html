@@ -915,6 +915,30 @@
                         </div>
                     </div>
 
+                    <!-- Vista Previa al Compartir (WhatsApp & Redes Sociales) -->
+                    <h5 class="text-primary fw-bold mb-3"><i class="bi bi-whatsapp me-2"></i>Vista Previa al Compartir (WhatsApp & Redes Sociales)</h5>
+                    <div class="row bg-light p-3 rounded border mb-4 text-dark">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Título de la tarjeta al compartir por WhatsApp</label>
+                            <input type="text" class="form-control" id="cfgOgTitle" placeholder="Ej: Melany Store | Regalos, Detalles y Sorpresas" />
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold">Imagen / Foto de vista previa al compartir por WhatsApp</label>
+                            <div class="input-group">
+                                <input type="url" class="form-control" id="cfgOgImage" placeholder="https://... o sube una imagen" />
+                                <label class="btn btn-outline-primary" for="fileOgImage">
+                                    <i class="bi bi-upload me-1"></i>Subir Foto
+                                </label>
+                                <input type="file" id="fileOgImage" class="d-none" accept="image/*" onchange="subirLogoDirecto(this, 'cfgOgImage')">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label fw-semibold">Descripción corta al compartir por WhatsApp</label>
+                            <input type="text" class="form-control" id="cfgOgDescription" placeholder="Ej: Tu tienda de confianza. Descubre nuestro catálogo con envíos a todo el Perú y atención rápida." />
+                            <small class="text-muted">Esta es la foto y texto que se genera automáticamente cuando compartes el enlace por WhatsApp o redes sociales.</small>
+                        </div>
+                    </div>
+
                     <!-- Módulo Servicios -->
                     <h5 class="text-primary fw-bold mb-3"><i class="bi bi-briefcase me-2"></i>Módulo de Servicios Adicionales</h5>
                     <div class="row bg-light p-3 rounded border mb-4 text-dark">
@@ -4046,6 +4070,13 @@
                 const elCopy = document.getElementById('cfgCopyrightText');
                 if (elCopy) elCopy.value = configuracionCache.copyrightText || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.';
 
+                const elOgTit = document.getElementById('cfgOgTitle');
+                if (elOgTit) elOgTit.value = configuracionCache.ogTitle || '';
+                const elOgDesc = document.getElementById('cfgOgDescription');
+                if (elOgDesc) elOgDesc.value = configuracionCache.ogDescription || '';
+                const elOgImg = document.getElementById('cfgOgImage');
+                if (elOgImg) elOgImg.value = configuracionCache.ogImage || '';
+
                 const elSerHab = document.getElementById('cfgServiciosHabilitado');
                 if (elSerHab) elSerHab.checked = configuracionCache.serviciosHabilitado !== false;
                 const elSerTit = document.getElementById('cfgServiciosTitulo');
@@ -4120,6 +4151,9 @@
                 instagramUrl: (document.getElementById('cfgInstagramUrl')?.value || '').trim(),
                 tiktokUrl: (document.getElementById('cfgTiktokUrl')?.value || '').trim(),
                 copyrightText: (document.getElementById('cfgCopyrightText')?.value || 'Desarrollado por Corporación Syverluma S.A.C. — Todos los derechos reservados.').trim(),
+                ogTitle: (document.getElementById('cfgOgTitle')?.value || '').trim(),
+                ogDescription: (document.getElementById('cfgOgDescription')?.value || '').trim(),
+                ogImage: (document.getElementById('cfgOgImage')?.value || '').trim(),
                 serviciosHabilitado: document.getElementById('cfgServiciosHabilitado') ? document.getElementById('cfgServiciosHabilitado').checked : true,
                 serviciosTitulo: (document.getElementById('cfgServiciosTitulo')?.value || 'Nuestros Servicios').trim(),
                 serviciosSubtitulo: (document.getElementById('cfgServiciosSubtitulo')?.value || '').trim(),
