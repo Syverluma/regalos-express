@@ -465,9 +465,7 @@ p {
 /* Manual Dark Mode Toggle */
 body.modo-oscuro,
 html.modo-oscuro body {
-    background: linear-gradient(-45deg, #000000, #030a16, #091322, #000000) !important;
-    background-size: 400% 400% !important;
-    animation: liquidGradient 20s ease infinite !important;
+    background-color: var(--brand-bg-dark, #0f172a) !important;
     color: #f1f5f9 !important;
 }
 
@@ -729,15 +727,15 @@ html.modo-oscuro body .area p {
     overflow-x: auto;
 }
 
-/* Gradient Backgrounds & Solid Black Headers (Strictly above background strips) */
+/* Gradient Backgrounds & Headers Dinámicos */
 .gradient-bg,
 header, 
 .blog-hero, 
 .post-hero {
-    background: #000000 !important;
+    background: transparent;
     position: relative !important;
-    z-index: 6 !important;
-    border-bottom: 2px solid rgba(0, 123, 255, 0.3) !important;
+    z-index: 1 !important;
+    border-bottom: 2px solid var(--brand-primary, #2563eb) !important;
     color: #ffffff !important;
 }
 
@@ -1604,9 +1602,10 @@ body::before {
     right: 24px !important;
     width: auto !important;
     border-radius: 50px !important;
-    z-index: 1050 !important;
+    z-index: 99999 !important;
     padding: 0.5rem 1.6rem !important;
     background: transparent !important;
+    pointer-events: auto !important;
 }
 
 /* Ensure inner elements sit cleanly above glass layers */
@@ -1614,7 +1613,8 @@ body::before {
 .glass-navbar > *,
 .banner-card > * {
     position: relative !important;
-    z-index: 10 !important;
+    z-index: 100000 !important;
+    pointer-events: auto !important;
 }
 
 /* Tint and inner shadow layer */

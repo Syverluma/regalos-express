@@ -182,12 +182,26 @@
                 background: rgba(${secondaryRgb}, 0.35) !important;
             }
 
-            /* 6. Navbar Flotante Glass */
+            /* 6. Navbar Flotante Glass - Garantizar Capa Superior Interactivas */
             .glass-navbar, #mainNavbar, #navbar {
                 background-color: rgba(${cardBgRgb}, 0.92) !important;
                 backdrop-filter: blur(12px) !important;
                 border-bottom: 1px solid rgba(${primaryRgb}, 0.25) !important;
                 color: ${textColor} !important;
+                z-index: 99999 !important;
+                pointer-events: auto !important;
+            }
+
+            #mainNavbar .nav-link, 
+            #mainNavbar a, 
+            #mainNavbar button, 
+            .glass-navbar .nav-link, 
+            .glass-navbar a,
+            .navbar-toggler {
+                position: relative !important;
+                z-index: 100000 !important;
+                pointer-events: auto !important;
+                cursor: pointer !important;
             }
 
             /* 7. Footer Estilizado Armonioso (Eliminar Negro Rígido) */
