@@ -224,12 +224,12 @@
                 margin-right: auto !important;
                 width: auto !important;
                 max-width: 98% !important;
-                background-color: rgba(${cardBgRgb}, 0.58) !important;
-                backdrop-filter: blur(20px) saturate(190%) !important;
-                -webkit-backdrop-filter: blur(20px) saturate(190%) !important;
-                border: 1px solid rgba(255, 255, 255, 0.22) !important;
-                border-bottom: 1px solid rgba(${primaryRgb}, 0.3) !important;
-                box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+                background-color: rgba(${cardBgRgb}, 0.38) !important;
+                backdrop-filter: blur(24px) saturate(200%) !important;
+                -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
+                border: 1.5px solid rgba(255, 255, 255, 0.45) !important;
+                border-bottom: 1px solid rgba(${primaryRgb}, 0.35) !important;
+                box-shadow: 0 16px 40px rgba(0, 0, 0, 0.16), inset 0 1.5px 2px rgba(255, 255, 255, 0.65) !important;
                 color: ${textColor} !important;
                 z-index: 1050 !important;
                 pointer-events: auto !important;
