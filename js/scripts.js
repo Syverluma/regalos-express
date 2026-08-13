@@ -2874,7 +2874,6 @@ function inicializarChimueloIA() {
         let inp = document.getElementById('chatbotInput') || document.getElementById('ai-chimuelo-input');
         procesarConsultaChimuelo(texto, cont, inp);
     };
-}
 
 // Inicializar ambos motores en el arranque del sitio
 document.addEventListener('DOMContentLoaded', function () {
