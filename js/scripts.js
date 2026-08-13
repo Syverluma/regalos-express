@@ -488,6 +488,18 @@ async function cargarNavbarYFooterGlobal() {
                 document.body.appendChild(newScript);
                 oldScript.remove();
             });
+            // Vincular de forma robusta el botón de menú hamburguesa móvil
+            const togglerBtn = navbarTarget.querySelector('.navbar-toggler');
+            const collapseContent = navbarTarget.querySelector('#navbarSupportedContent');
+            if (togglerBtn && collapseContent && !togglerBtn.dataset.boundMobile) {
+                togglerBtn.dataset.boundMobile = 'true';
+                togglerBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    collapseContent.classList.toggle('show');
+                });
+            }
+
             console.log('Navbar dinámico cargado.');
             if (typeof actualizarContadorCarrito === 'function') actualizarContadorCarrito();
             if (typeof inicializarBusquedaPredictiva === 'function') inicializarBusquedaPredictiva();
