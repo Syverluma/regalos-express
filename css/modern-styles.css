@@ -1598,6 +1598,10 @@ body::before {
     z-index: 1050;
 }
 
+body {
+    padding-top: 80px !important;
+}
+
 .glass-navbar,
 #mainNavbar {
     position: fixed !important;
@@ -1617,6 +1621,70 @@ body::before {
     border: 1px solid rgba(255, 255, 255, 0.35) !important;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18), inset 0 1px 1px rgba(255, 255, 255, 0.5) !important;
     pointer-events: auto !important;
+}
+
+/* Reglas móviles para el menú flotante en smartphones */
+@media (max-width: 991.98px) {
+    body {
+        padding-top: 72px !important;
+    }
+
+    .glass-navbar, #mainNavbar {
+        top: 6px !important;
+        left: 8px !important;
+        right: 8px !important;
+        padding: 0.4rem 0.85rem !important;
+        border-radius: 24px !important;
+    }
+
+    .navbar-toggler {
+        border: 1.5px solid rgba(255, 255, 255, 0.35) !important;
+        border-radius: 12px !important;
+        padding: 0.35rem 0.65rem !important;
+        background: rgba(255, 255, 255, 0.25) !important;
+    }
+
+    .navbar-toggler-icon {
+        filter: invert(1) brightness(200%) !important;
+    }
+
+    body:not(.modo-oscuro) .navbar-toggler-icon {
+        filter: invert(0) !important;
+    }
+
+    #mainNavbar .navbar-collapse {
+        background-color: rgba(15, 23, 42, 0.96) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 16px !important;
+        padding: 1.2rem !important;
+        margin-top: 0.6rem !important;
+        max-height: 75vh !important;
+        overflow-y: auto !important;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4) !important;
+    }
+
+    body:not(.modo-oscuro) #mainNavbar .navbar-collapse {
+        background-color: rgba(255, 255, 255, 0.96) !important;
+        border-color: rgba(0, 0, 0, 0.1) !important;
+    }
+
+    #mainNavbar .navbar-nav .nav-link {
+        padding: 0.65rem 1rem !important;
+        font-size: 0.98rem !important;
+        border-radius: 10px !important;
+    }
+
+    #adminNav {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        margin-top: 1rem !important;
+        padding-top: 0.75rem !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
 }
 
 /* Ensure inner elements sit cleanly above glass layers */
